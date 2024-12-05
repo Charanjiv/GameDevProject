@@ -199,6 +199,34 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Player Actions",
+            "id": "c49adc3d-737b-42f3-89ea-604ffcdb9c4b",
+            "actions": [
+                {
+                    "name": "Dodge",
+                    "type": "Button",
+                    "id": "0d3a71a3-cb7d-4fa1-b2c3-2fc54e7632ac",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f5415f70-f507-4d2b-a373-301881b9203b",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
