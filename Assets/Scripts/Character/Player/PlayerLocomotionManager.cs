@@ -16,10 +16,13 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     private Vector3 targetRotationDirection;
     [SerializeField] float walkingSpeed = 2;
     [SerializeField] float runningSpeed = 5;
+    [SerializeField] float sprintingSpeed = 8f;
     [SerializeField] float rotationSpeed = 15;
+    [SerializeField] int sprintingStaminaCost = 2;
 
     [Header("Dodge")]
     private Vector3 rollDirection;
+    [SerializeField] float dodgeStaminaCost = 25;
 
     protected override void Awake()
     {
@@ -45,7 +48,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             moveAmount = player.characterNetworkManager.moveAmount.Value;
 
             //  IF NOT LOCKED ON, PASS MOVE AMOUNT
-            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
 
             //  IF LOCKED ON, PASS HORZ AND VERT
         }
@@ -80,16 +83,22 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         moveDirection = moveDirection + PlayerCamera.instance.transform.right * horizontalMovement;
         moveDirection.Normalize();
         moveDirection.y = 0;
-
-        if (PlayerInputManager.instance.moveAmount > 0.5f)
+        if (player.playerNetworkManager.isSprinting.Value)
         {
-            //  RUNNING SPEED
-            player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+            player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
         }
-        else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+        else
         {
-            //  WALKING SPEED
-            player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+            if (PlayerInputManager.instance.moveAmount > 0.5f)
+            {
+                //  RUNNING SPEED
+                player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+            }
+            else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+            {
+                //  WALKING SPEED
+                player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+            }
         }
     }
 
@@ -119,6 +128,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (player.isPerformingAction)
             return;
 
+        if (player.playerNetworkManager.currentStamina.Value <= 0)
+            return;
+
         //  IF WE ARE MOVING WHEN WE ATTEMPT TO DODGE, WE PERFORM A ROLL
         if (PlayerInputManager.instance.moveAmount > 0)
         {
@@ -137,5 +149,38 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         {
             player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
         }
+
+        player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
+    }
+
+    public void HandleSprinting()
+    {
+        if (player.isPerformingAction)
+        {
+            player.playerNetworkManager.isSprinting.Value = false;
+        }
+
+        if (player.playerNetworkManager.currentStamina.Value <= 0)
+        {
+            player.playerNetworkManager.isSprinting.Value = false;
+            return;
+        }
+
+        if (moveAmount >= 0.5)
+        {
+            player.playerNetworkManager.isSprinting.Value = true;
+        }
+
+        else
+        {
+            player.playerNetworkManager.isSprinting.Value = false;
+        }
+
+        if (player.playerNetworkManager.isSprinting.Value)
+        {
+            player.playerNetworkManager.currentStamina.Value -= sprintingStaminaCost * Time.deltaTime;
+        }
+
+
     }
 }

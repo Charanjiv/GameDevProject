@@ -7,8 +7,6 @@ public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInputManager instance;
     public PlayerManager player;
-    //  GOALS
-    //  2. MOVE CHARACTER BASED ON THOSE VALUES
 
     PlayerControls playerControls;
 
@@ -25,6 +23,7 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("PLAYER ACTION INPUT")]
     [SerializeField] bool dodgeInput = false;
+    [SerializeField] bool sprintInput = false;
 
     private void Awake()
     {
@@ -72,6 +71,11 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
 
+            //  HOLDING THE INPUT, SETS THE BOOL TO TRUE
+            playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
+            //  RELEASING THE INPUT, SETS THE BOOL TO FALSE
+            playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
+
         }
 
         playerControls.Enable();
@@ -109,6 +113,7 @@ public class PlayerInputManager : MonoBehaviour
         HandlePlayerMovementInput();
         HandleCameraMovementInput();
         HandleDodgeInput();
+        HandleSprinting();
     }
 
     //  MOVEMENT
@@ -131,7 +136,7 @@ public class PlayerInputManager : MonoBehaviour
 
         if (player == null)
             return;
-        player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+        player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
     }
 
     private void HandleCameraMovementInput()
@@ -149,6 +154,18 @@ public class PlayerInputManager : MonoBehaviour
             dodgeInput = false;
             //  PERFORM DODGE   
             player.playerLocomotionManager.AttemptToPerformDodge();
+        }
+    }
+
+    private void HandleSprinting()
+    {
+        if (sprintInput)
+        {
+            player.playerLocomotionManager.HandleSprinting();
+        }
+        else
+        {
+            player.playerNetworkManager.isSprinting.Value = false;
         }
     }
 }
