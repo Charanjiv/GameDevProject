@@ -1,0 +1,23 @@
+using UnityEngine;
+
+[System.Serializable]
+//  SINCE I WANT TO REFERENCE THIS DATA FOR EVERY SAVE FILE, THIS SCRIPT IS NOT A MONOBEHAVIOUR AND IS INSTEAD SERIALIZABLE
+
+public class CharacterSaveData
+{
+    [Header("SCENE INDEX")]
+    public int sceneIndex = 1;
+
+    [Header("Character Name")]
+    public string characterName = "Character";
+
+    [Header("Time Played")]
+    public float secondsPlayed;
+
+    // NOTE TO SELF: WHY NOT USE A VECTOR3?
+    // ANSWER: WE CAN ONLY SAVE DATA FROM "BASIC" VARIABLE TYPES (Float, Int, String, Bool, ect)
+    [Header("World Coordinates")]
+    public float xPosition;
+    public float yPosition;
+    public float zPosition;
+}
