@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TitleScreenManager : MonoBehaviour
 {
     public static TitleScreenManager Instance;
+
     [Header("Menus")]
     [SerializeField] GameObject titleScreenMainMenu;
     [SerializeField] GameObject titleScreenLoadMenu;
@@ -19,7 +20,7 @@ public class TitleScreenManager : MonoBehaviour
 
     [Header("Pop Ups")]
     [SerializeField] GameObject noCharacterSlotsPopUp;
-    [SerializeField] Button noCharacterSlotsButton;
+    [SerializeField] Button noCharacterSlotsOkayButton;
     [SerializeField] GameObject deleteCharacterSlotPopUp;
 
     [Header("Character Slots")]
@@ -45,7 +46,6 @@ public class TitleScreenManager : MonoBehaviour
     public void StartNewGame()
     {
         WorldSaveGameManager.instance.AttemptToCreateNewGame();
-
     }
 
     public void OpenLoadGameMenu()
@@ -75,7 +75,7 @@ public class TitleScreenManager : MonoBehaviour
     public void DisplayNoFreeCharacterSlotsPopUp()
     {
         noCharacterSlotsPopUp.SetActive(true);
-        noCharacterSlotsButton.Select();
+        noCharacterSlotsOkayButton.Select();
     }
 
     public void CloseNoFreeCharacterSlotsPopUp()
