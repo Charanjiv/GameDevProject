@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class TakeDamageEffect : MonoBehaviour
+[CreateAssetMenu(menuName = "Character Effects/Instant Effects/Take Damage")]
+public class TakeDamageEffect : InstantCharacterEffects
 {
     [Header("Character Causing Damage")]
     public CharacterManager characterCausingDamage; // IF A CHARACTER IS CAUSING THIS DAMAGE, THAT CHARACTER IS STORED HERE
@@ -35,25 +36,25 @@ public class TakeDamageEffect : MonoBehaviour
     public float angleHitFrom;                  //  USED TO DETERMINE WHAT DAMAGE ANIMATION TO PLAY (Move backwards, to the left, to the right ect)
     public Vector3 contactPoint;                //  USED TO DETERMINE WHERE THE BLOOD FX INSTANTIATE
 
-    //public override void ProcessEffect(CharacterManager character)
-    //{
-    //    base.ProcessEffect(character);
+    public override void ProcessEffect(CharacterManager character)
+    {
+        base.ProcessEffect(character);
 
-    //    //  IF THE CHARACTER IS DEAD, NO ADDITIONAL DAMAGE EFFECTS SHOULD BE PROCESSED
-    //    if (character.isDead.Value)
-    //        return;
+        //  IF THE CHARACTER IS DEAD, NO ADDITIONAL DAMAGE EFFECTS SHOULD BE PROCESSED
+        if (character.isDead.Value)
+            return;
 
-    //    //  CHECK FOR "INVULNERABILITY"
+        //  CHECK FOR "INVULNERABILITY"
 
-    //    CalculateDamage(character);
-    //    //  CHECK WHICH DIRECTIONAL DAMAGE CAME FROM
-    //    //  PLAY A DAMAGE ANIMATION
-    //    //  CHECK FOR BUILD UPS (POISON, BLEED ECT)
-    //    //  PLAY DAMAGE SOUND FX
-    //    //  PLAY DAMAGE VFX (BlOOD)
+        CalculateDamage(character);
+        //  CHECK WHICH DIRECTIONAL DAMAGE CAME FROM
+        //  PLAY A DAMAGE ANIMATION
+        //  CHECK FOR BUILD UPS (POISON, BLEED ECT)
+        //  PLAY DAMAGE SOUND FX
+        //  PLAY DAMAGE VFX (BlOOD)
 
-    //    //  IF CHARACTER IS A.I, CHECK FOR NEW TARGET IF CHARACTER CAUSING DAMAGE IS PRESENT
-    //}
+        //  IF CHARACTER IS A.I, CHECK FOR NEW TARGET IF CHARACTER CAUSING DAMAGE IS PRESENT
+    }
 
     private void CalculateDamage(CharacterManager character)
     {

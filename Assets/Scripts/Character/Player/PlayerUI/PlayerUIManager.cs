@@ -11,10 +11,10 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] bool startGameAsClient;
 
     [HideInInspector] public PlayerUIHudManager playerUIHudManager;
+    [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
 
     private void Awake()
     {
-        //  There can only be one instance of this at any given time. If another exists, destroy it.
         if (instance == null)
         {
             instance = this;
@@ -25,6 +25,7 @@ public class PlayerUIManager : MonoBehaviour
         }
 
         playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
+        playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
     }
 
     private void Start()
@@ -37,9 +38,9 @@ public class PlayerUIManager : MonoBehaviour
         if (startGameAsClient)
         {
             startGameAsClient = false;
-            //  First shut down the network as a host, to then start it as a client. Started as a host during the title screen.
+            //  WE MUST FIRST SHUT DOWN, BECAUSE WE HAVE STARTED AS A HOST DURING THE TITLE SCREEN
             NetworkManager.Singleton.Shutdown();
-            //  We restart the network as a client.
+            //  WE THEN RESTART, AS A CLIENT
             NetworkManager.Singleton.StartClient();
         }
     }

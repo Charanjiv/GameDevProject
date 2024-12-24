@@ -1,8 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-//  SINCE I WANT TO REFERENCE THIS DATA FOR EVERY SAVE FILE, THIS SCRIPT IS NOT A MONOBEHAVIOUR AND IS INSTEAD SERIALIZABLE
-
+//  SINCE WE WANT TO REFERENCE THIS DATA FOR EVERY SAVE FILE, THIS SCRIPT IS NOT A MONOBEHAVIOUR AND IS INSTEAD SERIALIZABLE
 public class CharacterSaveData
 {
     [Header("SCENE INDEX")]
@@ -22,7 +21,7 @@ public class CharacterSaveData
     public float zPosition;
 
     [Header("Resources")]
-    public float currentHealth;
+    public int currentHealth;
     public float currentStamina;
 
     [Header("Stats")]
