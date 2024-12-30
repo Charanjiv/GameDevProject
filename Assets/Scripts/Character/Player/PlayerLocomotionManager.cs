@@ -18,11 +18,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] float runningSpeed = 5;
     [SerializeField] float sprintingSpeed = 8f;
     [SerializeField] float rotationSpeed = 15;
-    [SerializeField] int sprintingStaminaCost = 2;
+    [SerializeField] int sprintingStaminaCost = 10;
 
     [Header("Dodge")]
     private Vector3 rollDirection;
-    [SerializeField] float dodgeStaminaCost = 25;
+    [SerializeField] float dodgeStaminaCost = 50;
 
     protected override void Awake()
     {

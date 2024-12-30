@@ -26,15 +26,15 @@ public class WeaponItem : Item
     public float poiseDamage = 10;
     //  OFFENSIVE  POISE BONUS WHEN ATTACKING
 
-    //  WEAPON MODIFIERS
-    //  LIGHT ATTACK MODIFIER
+    [Header("Attack Modifiers")]
+    public float light_Attack_01_Modifier = 1.1f;
     //  HEAVY ATTACK MODIFIER
     //  CRITICAL DAMAGE MODIFIER ECT
 
-    [Header("Stamina Costs")]
+    [Header("Stamina Cost Modifiers")]
     public int baseStaminaCost = 20;
+    public float lightAttackStaminaCostMultiplier = 1f;
     //  RUNNING ATTACK STAMINA COST MODIFIER
-    //  LIGHT ATTACK STAMINA COST MODIFIER
     //  HEAVY ATTACK STAMINA COST MODIFIER ECT
 
 

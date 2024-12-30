@@ -111,7 +111,7 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
 
         foreach (WeaponItem weapon in player.playerInventoryManager.weaponsInRightHandSlots)
         {
-            //IF THE NEXT POTENTIAL WEAPON DOES NOT EQUAL THE UNARMED WEAPON
+            //  IF THE NEXT POTENTIAL WEAPON DOES NOT EQUAL THE UNARMED WEAPON
             if (player.playerInventoryManager.weaponsInRightHandSlots[player.playerInventoryManager.rightHandWeaponIndex].itemID != WorldItemDatabase.Instance.unarmedWeapon.itemID)
             {
                 selectedWeapon = player.playerInventoryManager.weaponsInRightHandSlots[player.playerInventoryManager.rightHandWeaponIndex];
@@ -161,6 +161,37 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
             leftHandSlot.LoadWeapon(leftHandWeaponModel);
             leftWeaponManager = leftHandWeaponModel.GetComponent<WeaponManager>();
             leftWeaponManager.SetWeaponDamage(player, player.playerInventoryManager.currentLeftHandWeapon);
+        }
+    }
+
+    //  DAMAGE COLLIDERS
+    public void OpenDamageCollider()
+    {
+        //  OPEN RIGHT WEAPON DAMAGE COLLIDER
+        if (player.playerNetworkManager.isUsingRightHand.Value)
+        {
+            rightWeaponManager.meleeDamageCollider.EnableDamageCollider();
+        }
+        //  OPEN LEFT WEAPON DAMAGE COLLIDER
+        else if (player.playerNetworkManager.isUsingLeftHand.Value)
+        {
+            leftWeaponManager.meleeDamageCollider.EnableDamageCollider();
+        }
+
+        //  PLAY WHOOSH SFX
+    }
+
+    public void CloseDamageCollider()
+    {
+        //  OPEN RIGHT WEAPON DAMAGE COLLIDER
+        if (player.playerNetworkManager.isUsingRightHand.Value)
+        {
+            rightWeaponManager.meleeDamageCollider.DisableDamageCollider();
+        }
+        //  OPEN LEFT WEAPON DAMAGE COLLIDER
+        else if (player.playerNetworkManager.isUsingLeftHand.Value)
+        {
+            leftWeaponManager.meleeDamageCollider.DisableDamageCollider();
         }
     }
 }

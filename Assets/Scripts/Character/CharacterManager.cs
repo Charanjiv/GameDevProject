@@ -11,9 +11,11 @@ public class CharacterManager : NetworkBehaviour
 
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Animator animator;
+
     [HideInInspector] public CharacterNetworkManager characterNetworkManager;
     [HideInInspector] public CharacterEffectsManager characterEffectsManager;
     [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
+    [HideInInspector] public CharacterCombatManeger characterCombatManager;
 
     [Header("Flags")]
     public bool isPerformingAction = false;
@@ -27,13 +29,21 @@ public class CharacterManager : NetworkBehaviour
 
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+
         characterNetworkManager = GetComponent<CharacterNetworkManager>();
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+        characterCombatManager = GetComponent<CharacterCombatManeger>();
+    }
+
+    protected virtual void Start()
+    {
+        IgnoreMyOwnColliders();
     }
 
     protected virtual void Update()
     {
+
         //  IF THIS CHARACTER IS BEING CONTROLLED FROM OUR SIDE, THEN ASSIGN ITS NETWORK POSITION TO THE POSITION OF OUR TRANSFORM
         if (IsOwner)
         {
