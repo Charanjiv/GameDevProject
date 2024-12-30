@@ -4241,6 +4241,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1870239025}
   m_CullTransparentMesh: 1
+--- !u!1 &1916684719 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7809117479190584628, guid: 856df2068d4496d4eab657ad27eea096, type: 3}
+  m_PrefabInstance: {fileID: 4648668968596659255}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1916684723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916684719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc3d6d19e14761c40a3753180b23bad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: []
 --- !u!1 &1977157531
 GameObject:
   m_ObjectHideFlags: 0
@@ -4827,6 +4845,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6951670601817536547, guid: bbbfe05f05c6ae341a95153d3a643dff, type: 3}
+      propertyPath: physicalDamageSFX.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951670601817536547, guid: bbbfe05f05c6ae341a95153d3a643dff, type: 3}
+      propertyPath: 'physicalDamageSFX.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 7cbd6cd765888ff418d01d98bd1ce9c2, type: 3}
+    - target: {fileID: 6951670601817536547, guid: bbbfe05f05c6ae341a95153d3a643dff, type: 3}
+      propertyPath: 'physicalDamageSFX.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1e3312d22540aa14597a1fb4739f2782, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5323,7 +5353,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7809117479190584628, guid: 856df2068d4496d4eab657ad27eea096, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1916684723}
   m_SourcePrefab: {fileID: 100100000, guid: 856df2068d4496d4eab657ad27eea096, type: 3}
 --- !u!1001 &4783464603920225409
 PrefabInstance:
@@ -5792,6 +5825,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7150532167910196426, guid: c8de69be05caea04a96cdddd201cba8a, type: 3}
+      propertyPath: bloodSplatterVFX
+      value: 
+      objectReference: {fileID: 3548588485384254792, guid: 2f9e7dc163581394da1e00b561eed65d, type: 3}
     - target: {fileID: 9163510129851281148, guid: c8de69be05caea04a96cdddd201cba8a, type: 3}
       propertyPath: m_Name
       value: World Character Effects Manager
