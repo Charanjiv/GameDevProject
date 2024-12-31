@@ -112,7 +112,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     private void HandleJumpingMovement()
     {
-        if (player.isJumping)
+        if (player.playerNetworkManager.isJumping.Value)
         {
             player.characterController.Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
         }
@@ -228,7 +228,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             return;
 
         //  IF WE ARE ALREADY IN A JUMP, WE DO NOT WANT TO ALLOW A JUMP AGAIN UNTIL THE CURRENT JUMP HAS FINISHED
-        if (player.isJumping)
+        if (player.playerNetworkManager.isJumping.Value)
             return;
 
         //  IF WE ARE NOT GROUNDED, WE DO NOT WANT TO ALLOW A JUMP
@@ -238,7 +238,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         //  IF WE ARE TWO HANDING OUR WEAPON, PLAY THE TWO HANDED JUMP ANIMATION, OTHERWISE PLAY THE ONE HANDED ANIMATION ( TO DO )
         player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_01", false);
 
-        player.isJumping = true;
+        player.playerNetworkManager.isJumping.Value = true;
 
         player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
 

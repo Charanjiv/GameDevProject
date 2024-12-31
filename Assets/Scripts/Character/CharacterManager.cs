@@ -23,7 +23,6 @@ public class CharacterManager : NetworkBehaviour
     public bool applyRootMotion = false;
     public bool canRotate = true;
     public bool canMove = true;
-    public bool isJumping = false;
     public bool isGrounded = true;
 
     protected virtual void Awake()
