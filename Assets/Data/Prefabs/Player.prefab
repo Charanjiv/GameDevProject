@@ -1333,10 +1333,13 @@ MonoBehaviour:
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
+  characterSoundFXManager: {fileID: 0}
   isPerformingAction: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
+  isJumping: 0
+  isGrounded: 1
   respawnCharacter: 0
   switchRightWeapon: 0
   playerAnimatorManager: {fileID: 0}
@@ -1358,6 +1361,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee05a4764f758834f811cb2bd7dfd00a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravityForce: -40
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  groundCheckSphereRadius: 0.1
+  yVelocity: {x: 0, y: 0, z: 0}
+  groundedYVelocity: -20
+  fallStartYVelocity: -5
+  inAirTimer: 0
   verticalMovement: 0
   horizontalMovement: 0
   moveAmount: 0
@@ -1367,6 +1379,7 @@ MonoBehaviour:
   rotationSpeed: 15
   sprintingStaminaCost: 2
   dodgeStaminaCost: 2
+  jumpStaminaCost: 25
 --- !u!114 &-1988224386303523806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,6 +1645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dacc834386b66f4399c376ec449c1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodSplatterVFX: {fileID: 0}
   effectToTest: {fileID: 11400000, guid: d18dae03078c61649a0b5bafdb23b897, type: 2}
   processEffect: 0
 --- !u!114 &-3970396610986372939

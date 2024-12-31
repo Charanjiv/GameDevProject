@@ -25,6 +25,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool dodgeInput = false;
     [SerializeField] bool sprintInput = false;
     [SerializeField] bool RB_Input = false;
+    [SerializeField] bool jumpInput = false;
 
     private void Awake()
     {
@@ -87,6 +88,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
             playerControls.PlayerActions.RB.performed += i => RB_Input = true;
+            playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
             //  HOLDING THE INPUT, SETS THE BOOL TO TRUE
             playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
             //  RELEASING THE INPUT, SETS THE BOOL TO FALSE
@@ -129,7 +131,7 @@ public class PlayerInputManager : MonoBehaviour
         HandlePlayerMovementInput();
         HandleCameraMovementInput();
         HandleDodgeInput();
-        HandleSprinting();
+        HandleSprintInput();
         HandleRBInput();
     }
 
@@ -174,7 +176,7 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleSprinting()
+    private void HandleSprintInput()
     {
         if (sprintInput)
         {
@@ -199,6 +201,19 @@ public class PlayerInputManager : MonoBehaviour
             //  TODO: IF TWO HANDING THE WEAPON, USE THE TWO HANDED ACTION
 
             player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.oh_RB_Action, player.playerInventoryManager.currentRightHandWeapon);
+        }
+    }
+
+    private void HandleJumpInput()
+    {
+        if (jumpInput)
+        {
+            jumpInput = false;
+
+            //  IF WE HAVE A UI WINDOW OPEN, SIMPLY RETURN WITHOUT DOING ANYTHING
+
+            //  ATTEMPT TO PERFORM JUMP
+            player.playerLocomotionManager.AttemptToPerformJump();
         }
     }
 }
