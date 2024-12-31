@@ -133,6 +133,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleDodgeInput();
         HandleSprintInput();
         HandleRBInput();
+        HandleJumpInput();
     }
 
     //  MOVEMENT

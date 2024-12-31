@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
-public class ResetActionFlag : StateMachineBehaviour
+public class ResetIsJumping : StateMachineBehaviour
 {
     CharacterManager character;
 
@@ -13,11 +12,6 @@ public class ResetActionFlag : StateMachineBehaviour
             character = animator.GetComponent<CharacterManager>();
         }
 
-        //  THIS IS CALLED WHEN AN ACTION ENDS, AND THE STATE RETURNS TO "EMPTY"
-        character.isPerformingAction = false;
-        character.applyRootMotion = false;
-        character.canRotate = true;
-        character.canMove = true;
         character.isJumping = false;
     }
 
