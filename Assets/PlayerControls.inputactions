@@ -167,6 +167,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Lock On",
+                    "type": "Button",
+                    "id": "31b6efc5-b201-46ff-9e8c-3f436d58ce68",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -244,6 +253,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "RB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c2fb5dc7-1947-4af0-a463-8f6941102a5c",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lock On",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

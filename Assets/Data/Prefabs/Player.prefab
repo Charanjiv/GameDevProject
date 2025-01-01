@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5495220575886077223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7840574496629894691}
+  m_Layer: 7
+  m_Name: Lock On Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7840574496629894691
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5495220575886077223}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2326180123489008784}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5999696353968195084
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,6 +364,9 @@ PrefabInstance:
     - {fileID: 100078, guid: d288a0e4a2d923b46898986e979da643, type: 3}
     - {fileID: 100080, guid: d288a0e4a2d923b46898986e979da643, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 400108, guid: d288a0e4a2d923b46898986e979da643, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 7840574496629894691}
     - targetCorrespondingSourceObject: {fileID: 400048, guid: d288a0e4a2d923b46898986e979da643, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1597603763935180754}
@@ -389,6 +423,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7057937565469605334}
   m_SourcePrefab: {fileID: 100100000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
+--- !u!4 &2326180123489008784 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400108, guid: d288a0e4a2d923b46898986e979da643, type: 3}
+  m_PrefabInstance: {fileID: 2326180123489134204}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2326180123489008844 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400048, guid: d288a0e4a2d923b46898986e979da643, type: 3}
@@ -1304,7 +1343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2409615037
+  GlobalObjectIdHash: 4248610217
   InScenePlacedSourceGlobalObjectIdHash: 2409615037
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1338,7 +1377,6 @@ MonoBehaviour:
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
-  isJumping: 0
   isGrounded: 1
   respawnCharacter: 0
   switchRightWeapon: 0
@@ -1378,8 +1416,11 @@ MonoBehaviour:
   sprintingSpeed: 8
   rotationSpeed: 15
   sprintingStaminaCost: 2
-  dodgeStaminaCost: 2
   jumpStaminaCost: 25
+  jumpHeight: 4
+  jumpForwardSpeed: 5
+  freeFallSpeed: 2
+  dodgeStaminaCost: 2
 --- !u!114 &-1988224386303523806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1406,6 +1447,10 @@ MonoBehaviour:
   moveAmount:
     m_InternalValue: 0
   isSprinting:
+    m_InternalValue: 0
+  isJumping:
+    m_InternalValue: 0
+  isLockedOn:
     m_InternalValue: 0
   currentHealth:
     m_InternalValue: 0
@@ -1702,5 +1747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d2fbde4dbb3b24b8c527522a6c179b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTarget: {fileID: 0}
   currentAttackType: 0
+  lockOnTransform: {fileID: 7840574496629894691}
   currentWeaponBeingUsed: {fileID: 11400000, guid: ebd02820720e94a4a93c116914bdf194, type: 2}
