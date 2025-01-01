@@ -147,23 +147,25 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleLockOnInput()
     {
         //  CHECK FOR DEAD TARGET
-
         if (player.playerNetworkManager.isLockedOn.Value)
         {
-            if(player.playerCombatManager.currentTarget == null)
-            {
+            if (player.playerCombatManager.currentTarget == null)
                 return;
-            }
+
             if (player.playerCombatManager.currentTarget.isDead.Value)
             {
                 player.playerNetworkManager.isLockedOn.Value = false;
             }
+
             //  ATTEMPT TO FIND NEW TARGET
         }
+
 
         if (lockOn_Input && player.playerNetworkManager.isLockedOn.Value)
         {
             lockOn_Input = false;
+            PlayerCamera.instance.ClearLockOnTargets();
+            player.playerNetworkManager.isLockedOn.Value = false;
             //  DISABLE LOCK ON
             return;
         }
@@ -175,6 +177,12 @@ public class PlayerInputManager : MonoBehaviour
             //  IF WE ARE AIMING USING RANGED WEAPONS RETURN (DO NOT ALLOW LOCK WHILST AIMING)
 
             PlayerCamera.instance.HandleLocatingLockOnTargets();
+
+            if (PlayerCamera.instance.nearestLockOnTarget != null)
+            {
+                player.playerCombatManager.SetTarget(PlayerCamera.instance.nearestLockOnTarget);
+                player.playerNetworkManager.isLockedOn.Value = true;
+            }
         }
     }
 

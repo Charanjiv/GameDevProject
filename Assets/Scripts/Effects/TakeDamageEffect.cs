@@ -62,6 +62,8 @@ public class TakeDamageEffect : InstantCharacterEffects
         if (!character.IsOwner)
             return;
 
+
+
         if (characterCausingDamage != null)
         {
             //  CHECK FOR DAMAGE MODIFIERS AND MODIFY BASE DAMAGE (PHYSICAL/ELEMENTAL DAMAGE BUFF)
@@ -105,6 +107,9 @@ public class TakeDamageEffect : InstantCharacterEffects
     private void PlayDirectionalBasedDamageAnimation(CharacterManager character)
     {
         if (!character.IsOwner)
+            return;
+
+        if (character.isDead.Value)
             return;
 
         //  TODO CALCULATE IF POISE IS BROKEN

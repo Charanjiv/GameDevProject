@@ -1,7 +1,12 @@
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
-public class CharacterCombatManeger : MonoBehaviour
+public class CharacterCombatManeger : NetworkBehaviour
 {
+
+    CharacterManager character;
+
     [Header("Attack Target")]
     public CharacterManager currentTarget;
 
@@ -13,6 +18,23 @@ public class CharacterCombatManeger : MonoBehaviour
 
     protected virtual void Awake()
     {
+        character = GetComponent<CharacterManager>();
+    }
 
+    public virtual void SetTarget(CharacterManager newTarget)
+    {
+        if (character.IsOwner)
+        {
+            if (newTarget != null)
+            {
+                currentTarget = newTarget;
+                //  TELL THE NETWORK WE HAVE A TARGET, AND WHO IT IS
+                character.characterNetworkManager.currentTargetNetworkObjectID.Value = newTarget.GetComponent<NetworkObject>().NetworkObjectId;
+            }
+            else
+            {
+                currentTarget = null;
+            }
+        }
     }
 }
