@@ -17,6 +17,9 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("LOCK ON INPUT")]
     [SerializeField] bool lockOn_Input;
+    [SerializeField] bool lockOn_Left_Input;
+    [SerializeField] bool lockOn_Right_Input;
+    private Coroutine lockOnCoroutine;
 
     [Header("PLAYER MOVEMENT INPUT")]
     [SerializeField] Vector2 movementInput;
@@ -95,6 +98,8 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
             //  LOCK ON
             playerControls.PlayerActions.LockOn.performed += i => lockOn_Input = true;
+            playerControls.PlayerActions.SeekLeftLockOnTarget.performed += i => lockOn_Left_Input = true;
+            playerControls.PlayerActions.SeekRightLockOnTarget.performed += i => lockOn_Right_Input = true;
             //  HOLDING THE INPUT, SETS THE BOOL TO TRUE
             playerControls.PlayerActions.Sprint.performed += i => sprint_Input = true;
             //  RELEASING THE INPUT, SETS THE BOOL TO FALSE
@@ -135,6 +140,7 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleAllInputs()
     {
         HandleLockOnInput();
+        HandleLockOnSwitchTargetInput();
         HandlePlayerMovementInput();
         HandleCameraMovementInput();
         HandleDodgeInput();
@@ -158,6 +164,12 @@ public class PlayerInputManager : MonoBehaviour
             }
 
             //  ATTEMPT TO FIND NEW TARGET
+
+            //  THIS ASSURES THAT THE COROUTINE NEVER RUNS MUILTPLE TIMES OVERLAPPING ITSELF
+            if (lockOnCoroutine != null)
+                StopCoroutine(lockOnCoroutine);
+
+            lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget());
         }
 
 
@@ -186,27 +198,77 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
+    private void HandleLockOnSwitchTargetInput()
+    {
+        if (lockOn_Left_Input)
+        {
+            lockOn_Left_Input = false;
+
+            if (player.playerNetworkManager.isLockedOn.Value)
+            {
+                PlayerCamera.instance.HandleLocatingLockOnTargets();
+
+                if (PlayerCamera.instance.leftLockOnTarget != null)
+                {
+                    player.playerCombatManager.SetTarget(PlayerCamera.instance.leftLockOnTarget);
+                }
+            }
+        }
+
+        if (lockOn_Right_Input)
+        {
+            lockOn_Right_Input = false;
+
+            if (player.playerNetworkManager.isLockedOn.Value)
+            {
+                PlayerCamera.instance.HandleLocatingLockOnTargets();
+
+                if (PlayerCamera.instance.rightLockOnTarget != null)
+                {
+                    player.playerCombatManager.SetTarget(PlayerCamera.instance.rightLockOnTarget);
+                }
+            }
+        }
+    }
+
     //  MOVEMENT
 
     private void HandlePlayerMovementInput()
     {
         vertical_Input = movementInput.y;
         horizontal_Input = movementInput.x;
-        //  RETURNS ABSOLUTE NUMBER
+
+        //  RETURNS THE ABSOLUTE NUMBER, (Meaning number without the negative sign, so its always positive)
         moveAmount = Mathf.Clamp01(Mathf.Abs(vertical_Input) + Mathf.Abs(horizontal_Input));
-        //  CLAMP THE VALUES, EITHER 0, 0.5 OR 1
-        if (moveAmount <=0.5 && moveAmount > 0)
+
+        //  WE CLAMP THE VALUES, SO THEY ARE 0, 0.5 OR 1 (OPTIONAL)
+        if (moveAmount <= 0.5 && moveAmount > 0)
         {
             moveAmount = 0.5f;
         }
-        else if (moveAmount >0.5 && moveAmount <= 1)
+        else if (moveAmount > 0.5 && moveAmount <= 1)
         {
             moveAmount = 1;
         }
 
+        // WHY DO WE PASS 0 ON THE HORIZONTAL? BECAUSE WE ONLY WANT NON-STRAFING MOVEMENT
+        // WE USE THE HORIZONTAL WHEN WE ARE STRAFING OR LOCKED ON
+
         if (player == null)
             return;
-        player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
+
+        //  IF WE ARE NOT LOCKED ON, ONLY USE THE MOVE AMOUNT
+
+        if (!player.playerNetworkManager.isLockedOn.Value || player.playerNetworkManager.isSprinting.Value)
+        {
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
+        }
+        else
+        {
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(horizontal_Input, vertical_Input, player.playerNetworkManager.isSprinting.Value);
+        }
+
+        //  IF WE ARE LOCKED ON PASS THE HORIZONTAL MOVEMENT AS WELL
     }
 
     private void HandleCameraMovementInput()

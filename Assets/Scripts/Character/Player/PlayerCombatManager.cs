@@ -26,7 +26,6 @@ public class PlayerCombatManager : CharacterCombatManeger
 
     public virtual void DrainStaminaBasedOnAttack()
     {
-        Debug.Log("Stamina Function");
         if (!player.IsOwner)
             return;
 
@@ -46,5 +45,15 @@ public class PlayerCombatManager : CharacterCombatManeger
 
         Debug.Log("STAMINA DEDUCTED: " + staminaDeducted);
         player.playerNetworkManager.currentStamina.Value -= Mathf.RoundToInt(staminaDeducted);
+    }
+
+    public override void SetTarget(CharacterManager newTarget)
+    {
+        base.SetTarget(newTarget);
+
+        if (player.IsOwner)
+        {
+            PlayerCamera.instance.SetLockCameraHeight();
+        }
     }
 }

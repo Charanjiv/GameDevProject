@@ -176,6 +176,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Seek Left Lock On Target",
+                    "type": "Button",
+                    "id": "86fa6a74-c497-42a9-81c2-3b4fa10c96f1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Seek Right Lock On Target",
+                    "type": "Button",
+                    "id": "e43e08c9-67f5-430a-8d57-dd6408c7898f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -264,6 +282,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Lock On",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4384a591-b7aa-43de-975e-f54c98ef56be",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Seek Left Lock On Target",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4565bcd8-45da-4a49-b324-9092a4d9b278",
+                    "path": "<Gamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Seek Right Lock On Target",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

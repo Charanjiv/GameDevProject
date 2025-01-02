@@ -5272,6 +5272,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 462007041}
     - target: {fileID: 8475191544134973008, guid: 6189b61bc8c68784bbc462b533c8261d, type: 3}
+      propertyPath: setCameraHeightSpeed
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8475191544134973008, guid: 6189b61bc8c68784bbc462b533c8261d, type: 3}
       propertyPath: collideWithLayers.m_Bits
       value: 1
       objectReference: {fileID: 0}
