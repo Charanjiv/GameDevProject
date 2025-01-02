@@ -27,12 +27,17 @@ public class PlayerInputManager : MonoBehaviour
     public float horizontal_Input;
     public float moveAmount;
 
-
     [Header("PLAYER ACTION INPUT")]
     [SerializeField] bool dodge_Input = false;
     [SerializeField] bool sprint_Input = false;
-    [SerializeField] bool RB_Input = false;
     [SerializeField] bool jump_Input = false;
+
+    [Header("BUMPER INPUTS")]
+    [SerializeField] bool RB_Input = false;
+
+    [Header("TRIGGER INPUTS")]
+    [SerializeField] bool RT_Input = false;
+    [SerializeField] bool Hold_RT_Input = false;
 
     private void Awake()
     {
@@ -94,17 +99,25 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerCamera.Movement.performed += i => camera_Input = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodge_Input = true;
-            playerControls.PlayerActions.RB.performed += i => RB_Input = true;
             playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
+
+            //  BUMPERS
+            playerControls.PlayerActions.RB.performed += i => RB_Input = true;
+
+            //  TRIGGERS
+            playerControls.PlayerActions.RT.performed += i => RT_Input = true;
+            playerControls.PlayerActions.HoldRT.performed += i => Hold_RT_Input = true;
+            playerControls.PlayerActions.HoldRT.canceled += i => Hold_RT_Input = false;
+
             //  LOCK ON
             playerControls.PlayerActions.LockOn.performed += i => lockOn_Input = true;
             playerControls.PlayerActions.SeekLeftLockOnTarget.performed += i => lockOn_Left_Input = true;
             playerControls.PlayerActions.SeekRightLockOnTarget.performed += i => lockOn_Right_Input = true;
+
             //  HOLDING THE INPUT, SETS THE BOOL TO TRUE
             playerControls.PlayerActions.Sprint.performed += i => sprint_Input = true;
             //  RELEASING THE INPUT, SETS THE BOOL TO FALSE
             playerControls.PlayerActions.Sprint.canceled += i => sprint_Input = false;
-
         }
 
         playerControls.Enable();
@@ -147,6 +160,8 @@ public class PlayerInputManager : MonoBehaviour
         HandleSprintInput();
         HandleRBInput();
         HandleJumpInput();
+        HandleRTInput();
+        HandleChargeRTInput();
     }
 
     //  LOCK ON
@@ -327,6 +342,34 @@ public class PlayerInputManager : MonoBehaviour
 
             //  ATTEMPT TO PERFORM JUMP
             player.playerLocomotionManager.AttemptToPerformJump();
+        }
+    }
+
+    private void HandleRTInput()
+    {
+        if (RT_Input)
+        {
+            RT_Input = false;
+
+            //  TODO: IF WE HAVE A UI WINDOW OPEN, RETURN AND DO NOTHING
+
+            player.playerNetworkManager.SetCharacterActionHand(true);
+
+            //  TODO: IF WE ARE TWO HANDING THE WEAPON, USE THE TWO HANDED ACTION
+
+            player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.oh_RT_Action, player.playerInventoryManager.currentRightHandWeapon);
+        }
+    }
+
+    private void HandleChargeRTInput()
+    {
+        //  ONLY WANT TO CHECK FOR A CHARGE IF IN AN ACTION THAT REQUIRES IT (Attacking)
+        if (player.isPerformingAction)
+        {
+            if (player.playerNetworkManager.isUsingRightHand.Value)
+            {
+                player.playerNetworkManager.isChargingAttack.Value = Hold_RT_Input;
+            }
         }
     }
 }

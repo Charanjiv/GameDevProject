@@ -28,20 +28,22 @@ public class WeaponItem : Item
 
     [Header("Attack Modifiers")]
     public float light_Attack_01_Modifier = 1.1f;
-    //  HEAVY ATTACK MODIFIER
-    //  CRITICAL DAMAGE MODIFIER ECT
+    public float heavy_Attack_01_Modifier = 1.4f;
+    public float charge_Attack_01_Modifier = 2.0f;
 
     [Header("Stamina Cost Modifiers")]
     public int baseStaminaCost = 20;
-    public float lightAttackStaminaCostMultiplier = 1f;
+    public float lightAttackStaminaCostMultiplier = 0.9f;
+    public float heavyAttackStaminaCostMultiplier = 1.2f;
+    public float chargedAttackStaminaCostMultiplier = 1.5f;
     //  RUNNING ATTACK STAMINA COST MODIFIER
     //  HEAVY ATTACK STAMINA COST MODIFIER ECT
 
 
     [Header("Actions")]
     public WeaponItemAction oh_RB_Action;   // ONE HAND RIGHT BUMPER ACTION
-
-    //  ASH OF WAR
+    public WeaponItemAction oh_RT_Action;   // ONE HAND RIGHT TRIGGER ACTION
+                                            //  ASH OF WAR
 
     //  BLOCKING SOUNDS
 }

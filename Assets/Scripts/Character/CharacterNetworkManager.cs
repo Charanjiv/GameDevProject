@@ -25,6 +25,7 @@ public class CharacterNetworkManager : NetworkBehaviour
     public NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> isLockedOn = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> isChargingAttack = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
 
     [Header("Resources")]
@@ -73,6 +74,11 @@ public class CharacterNetworkManager : NetworkBehaviour
         {
             character.characterCombatManager.currentTarget = null;
         }
+    }
+
+    public void OnIsChargingAttackChanged(bool oldStatus, bool newStatus)
+    {
+        character.animator.SetBool("isChargingAttack", isChargingAttack.Value);
     }
 
     //  A SERVER RPC IS A FUNCTION CALLED FROM A CLIENT, TO THE SERVER (IN OUR CASE THE HOST)
