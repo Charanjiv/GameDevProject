@@ -6,10 +6,6 @@ using Unity.Netcode;
 
 public class PlayerManager : CharacterManager
 {
-    [Header("DEBUG MENU")]
-    [SerializeField] bool respawnCharacter = false;
-    [SerializeField] bool switchRightWeapon = false;
-
     [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
@@ -46,8 +42,6 @@ public class PlayerManager : CharacterManager
 
         //  REGEN STAMINA
         playerStatsManager.RegenerateStamina();
-
-        DebugMenu();
     }
 
     protected override void LateUpdate()
@@ -63,6 +57,7 @@ public class PlayerManager : CharacterManager
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
+
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
 
         //  IF THIS IS THE PLAYER OBJECT OWNED BY THIS CLIENT
@@ -231,22 +226,6 @@ public class PlayerManager : CharacterManager
         if (playerNetworkManager.isLockedOn.Value)
         {
             playerNetworkManager.OnLockOnTargetIDChange(0, playerNetworkManager.currentTargetNetworkObjectID.Value);
-        }
-    }
-
-    //  DEBUG DELETE LATER
-    private void DebugMenu()
-    {
-        if (respawnCharacter)
-        {
-            respawnCharacter = false;
-            ReviveCharacter();
-        }
-
-        if (switchRightWeapon)
-        {
-            switchRightWeapon = false;
-            playerEquipmentManager.SwitchRightWeapon();
         }
     }
 }

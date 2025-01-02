@@ -1343,7 +1343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4248610217
+  GlobalObjectIdHash: 2409615037
   InScenePlacedSourceGlobalObjectIdHash: 2409615037
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1373,6 +1373,7 @@ MonoBehaviour:
   characterAnimatorManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
   isPerformingAction: 0
   applyRootMotion: 0
   canRotate: 1
@@ -1408,6 +1409,7 @@ MonoBehaviour:
   groundedYVelocity: -20
   fallStartYVelocity: -5
   inAirTimer: 0
+  isRolling: 0
   verticalMovement: 0
   horizontalMovement: 0
   moveAmount: 0
@@ -1446,11 +1448,15 @@ MonoBehaviour:
     m_InternalValue: 0
   moveAmount:
     m_InternalValue: 0
+  currentTargetNetworkObjectID:
+    m_InternalValue: 0
   isSprinting:
     m_InternalValue: 0
   isJumping:
     m_InternalValue: 0
   isLockedOn:
+    m_InternalValue: 0
+  isChargingAttack:
     m_InternalValue: 0
   currentHealth:
     m_InternalValue: 0
@@ -1555,6 +1561,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09494140d7d4b5b4193cf0ac084caaa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: Hit_Forward_Medium_01
+  hit_Forward_Medium_02: Hit_Forward_Medium_02
+  hit_Backward_Medium_01: Hit_Backward_Medium_01
+  hit_Backward_Medium_02: Hit_Backward_Medium_02
+  hit_Left_Medium_01: Hit_Left_Medium_01
+  hit_Left_Medium_02: Hit_Left_Medium_02
+  hit_Right_Medium_01: Hit_Right_Medium_01
+  hit_Right_Medium_02: Hit_Right_Medium_02
+  forward_Medium_Damage: []
+  backward_Medium_Damage: []
+  left_Medium_Damage: []
+  right_Medium_Damage: []
 --- !u!82 &-5202563603698746625
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1713,7 +1732,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f1d67537a9bc1e744962c6e5790fd636, type: 2}
   rightHandWeaponIndex: 0
   weaponsInLeftHandSlots:
-  - {fileID: 11400000, guid: f1d67537a9bc1e744962c6e5790fd636, type: 2}
+  - {fileID: 11400000, guid: 557ed3a16cb0e2f458ef6deade08b97a, type: 2}
   - {fileID: 11400000, guid: f1d67537a9bc1e744962c6e5790fd636, type: 2}
   - {fileID: 11400000, guid: f1d67537a9bc1e744962c6e5790fd636, type: 2}
   leftHandWeaponIndex: 0

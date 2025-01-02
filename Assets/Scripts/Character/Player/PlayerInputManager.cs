@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class PlayerInputManager : MonoBehaviour
 {
-    public static PlayerInputManager instance;
-    public PlayerManager player;
+    //  INPUT CONTROLS
+    private PlayerControls playerControls;
 
-    PlayerControls playerControls;
+    //  SINGLETON
+    public static PlayerInputManager instance;
+
+    //  LOCAL PLAYER
+    public PlayerManager player;
 
     [Header("CAMERA MOVEMENT INPUT")]
     [SerializeField] Vector2 camera_Input;
@@ -31,6 +35,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool dodge_Input = false;
     [SerializeField] bool sprint_Input = false;
     [SerializeField] bool jump_Input = false;
+    [SerializeField] bool switch_Right_Weapon_Input = false;
+    [SerializeField] bool switch_Left_Weapon_Input = false;
 
     [Header("BUMPER INPUTS")]
     [SerializeField] bool RB_Input = false;
@@ -38,6 +44,7 @@ public class PlayerInputManager : MonoBehaviour
     [Header("TRIGGER INPUTS")]
     [SerializeField] bool RT_Input = false;
     [SerializeField] bool Hold_RT_Input = false;
+
 
     private void Awake()
     {
@@ -79,6 +86,7 @@ public class PlayerInputManager : MonoBehaviour
             }
         }
         //  OTHERWISE WE MUST BE AT THE MAIN MENU, DISABLE OUR PLAYERS CONTROLS
+        //  THIS IS SO OUR PLAYER CANT MOVE AROUND IF WE ENTER THINGS LIKE A CHARACTER CREATION MENU ECT
         else
         {
             instance.enabled = false;
@@ -98,8 +106,12 @@ public class PlayerInputManager : MonoBehaviour
 
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerCamera.Movement.performed += i => camera_Input = i.ReadValue<Vector2>();
+
+            //  ACTIONS
             playerControls.PlayerActions.Dodge.performed += i => dodge_Input = true;
             playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
+            playerControls.PlayerActions.SwitchRightWeapon.performed += i => switch_Right_Weapon_Input = true;
+            playerControls.PlayerActions.SwitchLeftWeapon.performed += i => switch_Left_Weapon_Input = true;
 
             //  BUMPERS
             playerControls.PlayerActions.RB.performed += i => RB_Input = true;
@@ -158,10 +170,12 @@ public class PlayerInputManager : MonoBehaviour
         HandleCameraMovementInput();
         HandleDodgeInput();
         HandleSprintInput();
-        HandleRBInput();
         HandleJumpInput();
+        HandleRBInput();
         HandleRTInput();
         HandleChargeRTInput();
+        HandleSwitchRightWeaponInput();
+        HandleSwitchLeftWeaponInput();
     }
 
     //  LOCK ON
@@ -180,7 +194,7 @@ public class PlayerInputManager : MonoBehaviour
 
             //  ATTEMPT TO FIND NEW TARGET
 
-            //  THIS ASSURES THAT THE COROUTINE NEVER RUNS MUILTPLE TIMES OVERLAPPING ITSELF
+            //  THIS ASSURES US THAT THE COROUTINE NEVER RUNS MUILTPLE TIMES OVERLAPPING ITSELF
             if (lockOnCoroutine != null)
                 StopCoroutine(lockOnCoroutine);
 
@@ -292,14 +306,16 @@ public class PlayerInputManager : MonoBehaviour
         cameraHorizontal_Input = camera_Input.x;
     }
 
-    //  ACTIONS 
+    //  ACTION
 
     private void HandleDodgeInput()
     {
         if (dodge_Input)
         {
             dodge_Input = false;
-            //  PERFORM DODGE   
+
+            //  FUTURE NOTE: RETURN (DO NOTHING) IF MENU OR UI WINDOW IS OPEN
+
             player.playerLocomotionManager.AttemptToPerformDodge();
         }
     }
@@ -316,22 +332,6 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleRBInput()
-    {
-        if (RB_Input)
-        {
-            RB_Input = false;
-
-            //  TODO: IF WE HAVE A UI WINDOW OPEN, RETURN AND DO NOTHING
-
-            player.playerNetworkManager.SetCharacterActionHand(true);
-
-            //  TODO: IF TWO HANDING THE WEAPON, USE THE TWO HANDED ACTION
-
-            player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.oh_RB_Action, player.playerInventoryManager.currentRightHandWeapon);
-        }
-    }
-
     private void HandleJumpInput()
     {
         if (jump_Input)
@@ -342,6 +342,22 @@ public class PlayerInputManager : MonoBehaviour
 
             //  ATTEMPT TO PERFORM JUMP
             player.playerLocomotionManager.AttemptToPerformJump();
+        }
+    }
+
+    private void HandleRBInput()
+    {
+        if (RB_Input)
+        {
+            RB_Input = false;
+
+            //  TODO: IF WE HAVE A UI WINDOW OPEN, RETURN AND DO NOTHING
+
+            player.playerNetworkManager.SetCharacterActionHand(true);
+
+            //  TODO: IF WE ARE TWO HANDING THE WEAPON, USE THE TWO HANDED ACTION
+
+            player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.oh_RB_Action, player.playerInventoryManager.currentRightHandWeapon);
         }
     }
 
@@ -363,13 +379,31 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleChargeRTInput()
     {
-        //  ONLY WANT TO CHECK FOR A CHARGE IF IN AN ACTION THAT REQUIRES IT (Attacking)
+        //  WE ONLY WANT TO CHECK FOR A CHARGE IF WE ARE IN AN ACTION THAT REQUIRES IT (Attacking)
         if (player.isPerformingAction)
         {
             if (player.playerNetworkManager.isUsingRightHand.Value)
             {
                 player.playerNetworkManager.isChargingAttack.Value = Hold_RT_Input;
             }
+        }
+    }
+
+    private void HandleSwitchRightWeaponInput()
+    {
+        if (switch_Right_Weapon_Input)
+        {
+            switch_Right_Weapon_Input = false;
+            player.playerEquipmentManager.SwitchRightWeapon();
+        }
+    }
+
+    private void HandleSwitchLeftWeaponInput()
+    {
+        if (switch_Left_Weapon_Input)
+        {
+            switch_Left_Weapon_Input = false;
+            player.playerEquipmentManager.SwitchLeftWeapon();
         }
     }
 }
