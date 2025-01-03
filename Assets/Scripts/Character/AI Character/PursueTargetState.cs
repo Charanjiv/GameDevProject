@@ -1,0 +1,27 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+[CreateAssetMenu(menuName = "A.I/States/Pursue Target")]
+public class PursueTargetState : AIState
+{
+    public override AIState Tick(AICharacterManager aiCharacter)
+    {
+        //  CHECK IF WE ARE PERFORMING AN ACTION (IF SO DO NOTHING UNTIL ACTION IS COMPLETE)
+        if (aiCharacter.isPerformingAction)
+            return this;
+
+        //  CHECK IF OUR TARGET IS NULL, IF WE DO NOT HAVE A TARGET, RETURN TO IDLE STATE
+        if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
+            return SwitchState(aiCharacter, aiCharacter.idle);
+        //  MAKE SURE OUR NAVMESH AGENT IS ACTIVE, IF ITS NOT ENABLE IT
+        if (!aiCharacter.navMeshAgent.enabled)
+            aiCharacter.navMeshAgent.enabled = true;
+        aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
+        //aiCharacter.navMeshAgent.SetDestination(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position);
+        NavMeshPath path = new NavMeshPath();
+        aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
+        aiCharacter.navMeshAgent.SetPath(path);
+
+        return this;
+    }
+}
