@@ -15,7 +15,7 @@ public class CharacterManager : NetworkBehaviour
     [HideInInspector] public CharacterNetworkManager characterNetworkManager;
     [HideInInspector] public CharacterEffectsManager characterEffectsManager;
     [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
-    [HideInInspector] public CharacterCombatManeger characterCombatManager;
+    [HideInInspector] public CharacterCombatManager characterCombatManager;
     [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
     [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
 
@@ -25,6 +25,9 @@ public class CharacterManager : NetworkBehaviour
     public bool canRotate = true;
     public bool canMove = true;
     public bool isGrounded = true;
+
+    [Header("Character Group")]
+    public CharacterGroup characterGroup;
 
     protected virtual void Awake()
     {
@@ -36,7 +39,7 @@ public class CharacterManager : NetworkBehaviour
         characterNetworkManager = GetComponent<CharacterNetworkManager>();
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
-        characterCombatManager = GetComponent<CharacterCombatManeger>();
+        characterCombatManager = GetComponent<CharacterCombatManager>();
         characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
         characterLocomotionManager = GetComponent<CharacterLocomotionManager>();
     }
@@ -71,6 +74,11 @@ public class CharacterManager : NetworkBehaviour
                 characterNetworkManager.networkRotation.Value,
                 characterNetworkManager.networkRotationSmoothTime);
         }
+    }
+
+    protected virtual void FixedUpdate()
+    {
+
     }
 
     protected virtual void LateUpdate()

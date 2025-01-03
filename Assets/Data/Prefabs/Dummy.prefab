@@ -2281,7 +2281,7 @@ GameObject:
   - component: {fileID: 8968539073344444547}
   - component: {fileID: 3839558322773478049}
   - component: {fileID: 7658107849385386312}
-  - component: {fileID: 5605838306379378919}
+  - component: {fileID: 2332402449449811469}
   - component: {fileID: 5338164603453355271}
   - component: {fileID: 2287536751269216150}
   - component: {fileID: 4879427699698925151}
@@ -2401,7 +2401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2901404735
+  GlobalObjectIdHash: 3338305209
   InScenePlacedSourceGlobalObjectIdHash: 2409615037
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -2410,7 +2410,7 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &5605838306379378919
+--- !u!114 &2332402449449811469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2419,23 +2419,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 8533729570112392486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8f02b652f77bdd46b781702084c4ae9, type: 3}
+  m_Script: {fileID: 11500000, guid: c5ede85b466c0d944add32953598f1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isDead:
     m_InternalValue: 0
-  characterController: {fileID: 3839558322773478049}
+  characterController: {fileID: 0}
   animator: {fileID: 0}
   characterNetworkManager: {fileID: 0}
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
   isPerformingAction: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
   isGrounded: 1
+  characterGroup: 1
+  aiCharacterCombatManager: {fileID: 0}
+  currentState: {fileID: 11400000, guid: 798e042e9498295489bbc70d0bc42822, type: 2}
 --- !u!114 &5338164603453355271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2457,6 +2461,7 @@ MonoBehaviour:
   groundedYVelocity: -20
   fallStartYVelocity: -5
   inAirTimer: 0
+  isRolling: 0
 --- !u!114 &2287536751269216150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2482,11 +2487,15 @@ MonoBehaviour:
     m_InternalValue: 0
   moveAmount:
     m_InternalValue: 0
+  currentTargetNetworkObjectID:
+    m_InternalValue: 0
   isSprinting:
     m_InternalValue: 0
   isJumping:
     m_InternalValue: 0
   isLockedOn:
+    m_InternalValue: 0
+  isChargingAttack:
     m_InternalValue: 0
   currentHealth:
     m_InternalValue: 0
@@ -2512,6 +2521,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1987bfa94a46e148b48346d3146837d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: Hit_Forward_Medium_01
+  hit_Forward_Medium_02: Hit_Forward_Medium_02
+  hit_Backward_Medium_01: Hit_Backward_Medium_01
+  hit_Backward_Medium_02: Hit_Backward_Medium_02
+  hit_Left_Medium_01: Hit_Left_Medium_01
+  hit_Left_Medium_02: Hit_Left_Medium_02
+  hit_Right_Medium_01: Hit_Right_Medium_01
+  hit_Right_Medium_02: Hit_Right_Medium_02
+  forward_Medium_Damage: []
+  backward_Medium_Damage: []
+  left_Medium_Damage: []
+  right_Medium_Damage: []
 --- !u!82 &1379206698477539602
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2681,12 +2703,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8533729570112392486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ef6d9ce7a136f44b9a543da662c43fc, type: 3}
+  m_Script: {fileID: 11500000, guid: ee2ae8f9060341d4caa736e0b9adcd7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastAttackAnimationPerformed: 
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 6973197995163228481}
+  detectionRadius: 15
+  minimumDetectionAngle: -35
+  maximumDetectionAngle: 35
 --- !u!1 &8877576960154901462
 GameObject:
   m_ObjectHideFlags: 0

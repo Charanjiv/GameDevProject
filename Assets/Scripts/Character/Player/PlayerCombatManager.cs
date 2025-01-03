@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerCombatManager : CharacterCombatManeger
+public class PlayerCombatManager : CharacterCombatManager
 {
     PlayerManager player;
     public WeaponItem currentWeaponBeingUsed;

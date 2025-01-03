@@ -2,10 +2,10 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class CharacterCombatManeger : NetworkBehaviour
+public class CharacterCombatManager : NetworkBehaviour
 {
 
-    CharacterManager character;
+    protected CharacterManager character;
 
     [Header("Last Attack Animation Performed")]
     public string lastAttackAnimationPerformed;
