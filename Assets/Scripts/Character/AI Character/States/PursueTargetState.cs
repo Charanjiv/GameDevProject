@@ -13,10 +13,18 @@ public class PursueTargetState : AIState
         //  CHECK IF OUR TARGET IS NULL, IF WE DO NOT HAVE A TARGET, RETURN TO IDLE STATE
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
             return SwitchState(aiCharacter, aiCharacter.idle);
+
         //  MAKE SURE OUR NAVMESH AGENT IS ACTIVE, IF ITS NOT ENABLE IT
         if (!aiCharacter.navMeshAgent.enabled)
             aiCharacter.navMeshAgent.enabled = true;
+
+        //  IF OUR TARGET GOES OUTSIDE OF THE CHARACTERS F.O.V, PIVOT TO FACE THEM
+        if (aiCharacter.aiCharacterCombatManager.viewableAngle < aiCharacter.aiCharacterCombatManager.minimumFOV
+            || aiCharacter.aiCharacterCombatManager.viewableAngle > aiCharacter.aiCharacterCombatManager.maximumFOV)
+            aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+
         aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
+
         //aiCharacter.navMeshAgent.SetDestination(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position);
         NavMeshPath path = new NavMeshPath();
         aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);

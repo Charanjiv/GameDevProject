@@ -37,7 +37,8 @@ public class AICharacterManager : CharacterManager
     {
         base.FixedUpdate();
 
-        ProcessStateMachine();
+        if (IsOwner)
+            ProcessStateMachine();
     }
 
     //  OPTION 01
@@ -50,9 +51,17 @@ public class AICharacterManager : CharacterManager
             currentState = nextState;
         }
 
-        //  THE POSITION/ROTATION SHOULD BE RESET ONLY AFTER THE STATE MACHINE HAS PROCESSED ITS TICK
+        //  THE POSITION/ROTATION SHOULD BE RESET ONLY AFTER THE STATE MACHINE HAS PROCESSED IT'S TICK
         navMeshAgent.transform.localPosition = Vector3.zero;
         navMeshAgent.transform.localRotation = Quaternion.identity;
+
+        if (aiCharacterCombatManager.currentTarget != null)
+        {
+            aiCharacterCombatManager.targetsDirection = aiCharacterCombatManager.currentTarget.transform.position - transform.position;
+            aiCharacterCombatManager.viewableAngle = WorldUtilityManager.Instance.GetAngleOfTarget(transform, aiCharacterCombatManager.targetsDirection);
+            aiCharacterCombatManager.distanceFromTarget = Vector3.Distance(transform.position, aiCharacterCombatManager.currentTarget.transform.position);
+
+        }
 
         if (navMeshAgent.enabled)
         {
