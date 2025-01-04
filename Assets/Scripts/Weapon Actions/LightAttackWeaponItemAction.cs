@@ -15,6 +15,8 @@ public class LightAttackWeaponItemAction : WeaponItemAction
         if (playerPerformingAction.playerNetworkManager.currentStamina.Value <= 0)
             return;
 
+        if (!playerPerformingAction.characterLocomotionManager.isGrounded)
+            return;
 
         PerformLightAttack(playerPerformingAction, weaponPerformingAction);
     }
@@ -41,6 +43,5 @@ public class LightAttackWeaponItemAction : WeaponItemAction
         {
             playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01, light_Attack_01, true);
         }
-
     }
 }

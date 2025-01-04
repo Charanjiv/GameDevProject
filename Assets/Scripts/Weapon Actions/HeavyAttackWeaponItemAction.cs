@@ -16,7 +16,7 @@ public class HeavyAttackWeaponItemAction : WeaponItemAction
         if (playerPerformingAction.playerNetworkManager.currentStamina.Value <= 0)
             return;
 
-        if (!playerPerformingAction.isGrounded)
+        if (!playerPerformingAction.characterLocomotionManager.isGrounded)
             return;
 
         PerformHeavyAttack(playerPerformingAction, weaponPerformingAction);

@@ -16,7 +16,7 @@ public class AICharacterAnimatorManager : CharacterAnimatorManager
         //  HOST
         if (aiCharacter.IsOwner)
         {
-            if (!aiCharacter.isGrounded)
+            if (!aiCharacter.characterLocomotionManager.isGrounded)
                 return;
 
             Vector3 velocity = aiCharacter.animator.deltaPosition;
@@ -27,7 +27,7 @@ public class AICharacterAnimatorManager : CharacterAnimatorManager
         //  CLIENT
         else
         {
-            if (!aiCharacter.isGrounded)
+            if (!aiCharacter.characterLocomotionManager.isGrounded)
                 return;
 
             Vector3 velocity = aiCharacter.animator.deltaPosition;

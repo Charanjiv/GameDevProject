@@ -22,12 +22,10 @@ public class CharacterNetworkManager : NetworkBehaviour
     [Header("Target")]
     public NetworkVariable<ulong> currentTargetNetworkObjectID = new NetworkVariable<ulong>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    [Header("Flags")]
+    public NetworkVariable<bool> isLockedOn = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<bool> isLockedOn = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> isChargingAttack = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-
 
     [Header("Resources")]
     public NetworkVariable<int> currentHealth = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -111,11 +109,12 @@ public class CharacterNetworkManager : NetworkBehaviour
 
     private void PerformActionAnimationFromServer(string animationID, bool applyRootMotion)
     {
-        character.applyRootMotion = applyRootMotion;
+        character.characterAnimatorManager.applyRootMotion = applyRootMotion;
         character.animator.CrossFade(animationID, 0.2f);
     }
 
-    //  A SERVER RPC IS A FUNCTION CALLED FROM A CLIENT, TO THE SERVER (IN OUR CASE THE HOST)
+    //  ATTACK ANIMATION
+
     [ServerRpc]
     public void NotifyTheServerOfAttackActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion)
     {
@@ -126,7 +125,6 @@ public class CharacterNetworkManager : NetworkBehaviour
         }
     }
 
-    //  A CLIENT RPC IS SENT TO ALL CLIENTS PRESENT, FROM THE SERVER
     [ClientRpc]
     public void PlayAttackActionAnimationForAllClientsClientRpc(ulong clientID, string animationID, bool applyRootMotion)
     {
@@ -139,7 +137,7 @@ public class CharacterNetworkManager : NetworkBehaviour
 
     private void PerformAttackActionAnimationFromServer(string animationID, bool applyRootMotion)
     {
-        character.applyRootMotion = applyRootMotion;
+        character.characterAnimatorManager.applyRootMotion = applyRootMotion;
         character.animator.CrossFade(animationID, 0.2f);
     }
 
@@ -197,7 +195,6 @@ public class CharacterNetworkManager : NetworkBehaviour
         CharacterManager damagedCharacter = NetworkManager.Singleton.SpawnManager.SpawnedObjects[damagedCharacterID].gameObject.GetComponent<CharacterManager>();
         CharacterManager characterCausingDamage = NetworkManager.Singleton.SpawnManager.SpawnedObjects[characterCausingDamageID].gameObject.GetComponent<CharacterManager>();
         TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeDamageEffect);
-
         damageEffect.physicalDamage = physicalDamage;
         damageEffect.magicDamage = magicDamage;
         damageEffect.fireDamage = fireDamage;

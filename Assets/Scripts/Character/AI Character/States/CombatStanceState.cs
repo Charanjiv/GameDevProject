@@ -41,6 +41,7 @@ public class CombatStanceState : AIState
         }
 
         //  ROTATE TO FACE OUR TARGET
+        aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
 
         //  IF OUR TARGET IS NO LONGER PRESENT, SWITCH BACK TO IDLE
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
@@ -53,10 +54,9 @@ public class CombatStanceState : AIState
         }
         else
         {
-            //  CHECK RECOVERY TIMER,
-            //  PASS ATTACK TO ATTACK STATE
+            aiCharacter.attack.currentAttack = choosenAttack;
             //  ROLL FOR COMBO CHANCE
-            //  SWITCH STATE
+            return SwitchState(aiCharacter, aiCharacter.attack);
         }
 
         //  IF WE ARE OUTSIDE OF THE COMBAT ENGAGEMENT DISTANCE, SWITCH TO PURSUE TARGET STATE
@@ -82,7 +82,7 @@ public class CombatStanceState : AIState
 
         potentialAttacks = new List<AICharacterAttackAction>();
 
-        foreach (var potentialAttack in potentialAttacks)
+        foreach (var potentialAttack in aiCharacterAttacks)
         {
             //  IF WE ARE TOO CLOSE FOR THIS ATTACK, CHECK THE NEXT
             if (potentialAttack.minimumAttackDistance > aiCharacter.aiCharacterCombatManager.distanceFromTarget)
@@ -125,6 +125,7 @@ public class CombatStanceState : AIState
                 choosenAttack = attack;
                 previousAttack = choosenAttack;
                 hasAttack = true;
+                return;
             }
         }
     }

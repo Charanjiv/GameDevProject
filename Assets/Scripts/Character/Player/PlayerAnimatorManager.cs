@@ -13,7 +13,7 @@ public class PlayerAnimatorManager : CharacterAnimatorManager
 
     private void OnAnimatorMove()
     {
-        if (player.applyRootMotion)
+        if (applyRootMotion)
         {
             Vector3 velocity = player.animator.deltaPosition;
             player.characterController.Move(velocity);
@@ -21,7 +21,6 @@ public class PlayerAnimatorManager : CharacterAnimatorManager
         }
     }
 
-    //  ANIMATION EVENT CALLS
     //  ANIMATION EVENT CALLS
     public override void EnableCanDoCombo()
     {

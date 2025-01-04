@@ -19,15 +19,11 @@ public class CharacterManager : NetworkBehaviour
     [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
     [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
 
-    [Header("Flags")]
-    public bool isPerformingAction = false;
-    public bool applyRootMotion = false;
-    public bool canRotate = true;
-    public bool canMove = true;
-    public bool isGrounded = true;
-
     [Header("Character Group")]
     public CharacterGroup characterGroup;
+
+    [Header("Flags")]
+    public bool isPerformingAction = false;
 
     protected virtual void Awake()
     {
@@ -51,7 +47,7 @@ public class CharacterManager : NetworkBehaviour
 
     protected virtual void Update()
     {
-        animator.SetBool("isGrounded", isGrounded);
+        animator.SetBool("isGrounded", characterLocomotionManager.isGrounded);
 
         //  IF THIS CHARACTER IS BEING CONTROLLED FROM OUR SIDE, THEN ASSIGN ITS NETWORK POSITION TO THE POSITION OF OUR TRANSFORM
         if (IsOwner)
