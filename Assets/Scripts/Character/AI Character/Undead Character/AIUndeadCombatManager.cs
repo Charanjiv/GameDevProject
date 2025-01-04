@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class AIUndeadCombatManager : AICharacterCombatManager
 {
@@ -25,6 +26,7 @@ public class AIUndeadCombatManager : AICharacterCombatManager
 
     public void OpenRightHandDamageCollider()
     {
+        aiCharacter.characterSoundFXManager.PlayAttackGrunt();
         rightHandDamageCollider.EnableDamageCollider();
     }
 
@@ -35,6 +37,7 @@ public class AIUndeadCombatManager : AICharacterCombatManager
 
     public void OpenLeftHandDamageCollider()
     {
+        aiCharacter.characterSoundFXManager.PlayAttackGrunt();
         leftHandDamageCollider.EnableDamageCollider();
     }
 

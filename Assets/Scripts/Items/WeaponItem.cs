@@ -49,4 +49,6 @@ public class WeaponItem : Item
                                             //  ASH OF WAR
 
     //  BLOCKING SOUNDS
+    [Header("Whooshes")]
+    public AudioClip[] whooshes;
 }

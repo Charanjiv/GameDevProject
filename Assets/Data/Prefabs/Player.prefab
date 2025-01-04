@@ -918,7 +918,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c7801f5b384d944b9f35835e7acc844, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.692876
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c7801f5b384d944b9f35835e7acc844, type: 3}
       propertyPath: m_LocalPosition.y
@@ -926,7 +926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c7801f5b384d944b9f35835e7acc844, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.1419866
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c7801f5b384d944b9f35835e7acc844, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1345,6 +1345,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 2409615037
   InScenePlacedSourceGlobalObjectIdHash: 2409615037
+  DeferredDespawnTick: 0
+  Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -1352,6 +1354,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &-4162491839297260333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1364,6 +1368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10ed6c146942ae940a46c70988cb76e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   isDead:
     m_InternalValue: 0
   characterController: {fileID: -44440093134406251}
@@ -1374,13 +1379,8 @@ MonoBehaviour:
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
   characterLocomotionManager: {fileID: 0}
+  characterGroup: 0
   isPerformingAction: 0
-  applyRootMotion: 0
-  canRotate: 1
-  canMove: 1
-  isGrounded: 1
-  respawnCharacter: 0
-  switchRightWeapon: 0
   playerAnimatorManager: {fileID: 0}
   playerLocomotionManager: {fileID: 0}
   playerNetworkManager: {fileID: 0}
@@ -1410,6 +1410,9 @@ MonoBehaviour:
   fallStartYVelocity: -5
   inAirTimer: 0
   isRolling: 0
+  canRotate: 1
+  canMove: 1
+  isGrounded: 1
   verticalMovement: 0
   horizontalMovement: 0
   moveAmount: 0
@@ -1435,6 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d97ba509a7dc79d4a994045ef0a38f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   networkPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
   networkRotation:
@@ -1442,6 +1446,8 @@ MonoBehaviour:
   networkPositionVelocity: {x: 0, y: 0, z: 0}
   networkPositionSmoothTime: 0.1
   networkRotationSmoothTime: 0.1
+  isMoving:
+    m_InternalValue: 0
   horizontalMovement:
     m_InternalValue: 0
   verticalMovement:
@@ -1450,11 +1456,11 @@ MonoBehaviour:
     m_InternalValue: 0
   currentTargetNetworkObjectID:
     m_InternalValue: 0
+  isLockedOn:
+    m_InternalValue: 0
   isSprinting:
     m_InternalValue: 0
   isJumping:
-    m_InternalValue: 0
-  isLockedOn:
     m_InternalValue: 0
   isChargingAttack:
     m_InternalValue: 0
@@ -1561,6 +1567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09494140d7d4b5b4193cf0ac084caaa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applyRootMotion: 0
   lastDamageAnimationPlayed: 
   hit_Forward_Medium_01: Hit_Forward_Medium_01
   hit_Forward_Medium_02: Hit_Forward_Medium_02
@@ -1683,6 +1690,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b01a49523acac8458f96a6c0320a03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageGrunts:
+  - {fileID: 8300000, guid: 37670623b2aa89a4589af3d795088c80, type: 3}
+  - {fileID: 8300000, guid: 6857c17d0b39a594298d2c0ebc09f389, type: 3}
+  - {fileID: 8300000, guid: 9ac9e455e130968459fc7ff35a33428c, type: 3}
+  attackGrunts:
+  - {fileID: 8300000, guid: 93e2375703cfc9445b94007a531cd9f7, type: 3}
+  - {fileID: 8300000, guid: 4f38cfc057803284a8ce039fd8f26215, type: 3}
+  - {fileID: 8300000, guid: 7d7fc97b142add344bdaa7c64e9c8673, type: 3}
 --- !u!114 &1967644110001527597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1766,7 +1781,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d2fbde4dbb3b24b8c527522a6c179b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  lastAttackAnimationPerformed: 
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 7840574496629894691}
   currentWeaponBeingUsed: {fileID: 11400000, guid: ebd02820720e94a4a93c116914bdf194, type: 2}
+  canComboWithMainHandWeapon: 0
