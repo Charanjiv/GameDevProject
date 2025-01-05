@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -88,5 +89,23 @@ public class AICharacterManager : CharacterManager
         {
             aiCharacterNetworkManager.isMoving.Value = false;
         }
+    }
+
+    public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+    {
+        characterNetworkManager.currentHealth.Value = 0;
+        isDead.Value = true;
+
+        //  RESET ANY FLAGS HERE THAT NEED TO BE RESET
+        //  NOTHING YET
+
+        //  IF WE ARE NOT GROUNDED, PLAY AN AERIAL DEATH ANIMATION
+
+        if (!manuallySelectDeathAnimation)
+        {
+            characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
+        }
+
+        yield return new WaitForSeconds(5);
     }
 }

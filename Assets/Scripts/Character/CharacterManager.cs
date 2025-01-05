@@ -38,11 +38,15 @@ public class CharacterManager : NetworkBehaviour
         characterCombatManager = GetComponent<CharacterCombatManager>();
         characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
         characterLocomotionManager = GetComponent<CharacterLocomotionManager>();
+
+
     }
 
     protected virtual void Start()
     {
         IgnoreMyOwnColliders();
+        characterNetworkManager.vitality.Value = 15;
+        characterNetworkManager.endurance.Value = 10;
     }
 
     protected virtual void Update()
@@ -87,6 +91,12 @@ public class CharacterManager : NetworkBehaviour
         base.OnNetworkSpawn();
         animator.SetBool("isMoving", characterNetworkManager.isMoving.Value);
         characterNetworkManager.isMoving.OnValueChanged += characterNetworkManager.OnIsMovingChanged;
+        characterNetworkManager.isActive.OnValueChanged += characterNetworkManager.OnIsActiveChanged;
+        characterNetworkManager.maxHealth.Value = 500;
+        characterNetworkManager.currentHealth.Value = 500;
+        //  STATS
+        characterNetworkManager.currentHealth.OnValueChanged += characterNetworkManager.CheckHP;
+
     }
 
     public override void OnNetworkDespawn()
@@ -94,23 +104,28 @@ public class CharacterManager : NetworkBehaviour
         base.OnNetworkDespawn();
 
         characterNetworkManager.isMoving.OnValueChanged -= characterNetworkManager.OnIsMovingChanged;
+        characterNetworkManager.isActive.OnValueChanged -= characterNetworkManager.OnIsActiveChanged;
+        characterNetworkManager.currentHealth.OnValueChanged -= characterNetworkManager.CheckHP;
     }
 
     public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
         if (IsOwner)
         {
-            characterNetworkManager.currentHealth.Value = 0;
-            isDead.Value = true;
-
-            //  RESET ANY FLAGS HERE THAT NEED TO BE RESET
-            //  NOTHING YET
-
-            //  IF WE ARE NOT GROUNDED, PLAY AN AERIAL DEATH ANIMATION
-
-            if (!manuallySelectDeathAnimation)
+            if (characterNetworkManager.currentHealth.Value <= 0)
             {
-                characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
+                characterNetworkManager.currentHealth.Value = 0;
+                isDead.Value = true;
+
+                //  RESET ANY FLAGS HERE THAT NEED TO BE RESET
+                //  NOTHING YET
+
+                //  IF WE ARE NOT GROUNDED, PLAY AN AERIAL DEATH ANIMATION
+
+                if (!manuallySelectDeathAnimation)
+                {
+                    characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
+                }
             }
         }
 

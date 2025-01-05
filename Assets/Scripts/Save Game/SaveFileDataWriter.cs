@@ -53,6 +53,7 @@ public class SaveFileDataWriter
         catch (Exception ex)
         {
             Debug.LogError("ERROR WHILST TRYING TO SAVE CHARACTER DATA, GAME NOT SAVED" + savePath + "\n" + ex);
+            
         }
     }
 
