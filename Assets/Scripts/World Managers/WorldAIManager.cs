@@ -26,11 +26,11 @@ public class WorldAIManager : MonoBehaviour
 
     public void SpawnCharacter(AICharacterSpawner aiCharacterSpawner)
     {
-        if (NetworkManager.Singleton.IsServer)
-        {
+        //if (NetworkManager.Singleton.IsServer)
+        //{
             aiCharacterSpawners.Add(aiCharacterSpawner);
             aiCharacterSpawner.AttemptToSpawnCharacter();
-        }
+        //}
     }
 
     private void DespawnAllCharacters()

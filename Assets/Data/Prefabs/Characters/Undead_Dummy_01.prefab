@@ -1255,10 +1255,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 14.275367
-  m_Height: 41.25971
+  m_Radius: 23.801502
+  m_Height: 72.167595
   m_Direction: 2
-  m_Center: {x: -7.039744, y: -1.9438651, z: -0.65209067}
+  m_Center: {x: -7.0397506, y: 0.7358492, z: -0.08599545}
 --- !u!1 &3407949119641903116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1539,7 +1539,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1745,10 +1745,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 16.02009
-  m_Height: 41.018238
+  m_Radius: 24.161058
+  m_Height: 68.20789
   m_Direction: 2
-  m_Center: {x: 6.3596134, y: -1.9438664, z: 0.40690532}
+  m_Center: {x: 6.3596067, y: -2.901832, z: 2.805155}
 --- !u!1 &5375479164286504531
 GameObject:
   m_ObjectHideFlags: 0
@@ -2504,7 +2504,7 @@ Transform:
   m_GameObject: {fileID: 8533729570112392486}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 0, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2598,7 +2598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 849256830
+  GlobalObjectIdHash: 3338305209
   InScenePlacedSourceGlobalObjectIdHash: 3338305209
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2683,6 +2683,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isActive:
+    m_InternalValue: 1
   networkPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
   networkRotation:
@@ -2944,10 +2946,10 @@ MonoBehaviour:
   detectionRadius: 15
   minimumFOV: -35
   maximumFOV: 35
-  attackRotationSpeed: 25
+  attackRotationSpeed: 50
   rightHandDamageCollider: {fileID: 3467953282494658105}
   leftHandDamageCollider: {fileID: 8466957512783880395}
-  baseDamage: 25
+  baseDamage: 50
   attack01DamageModifier: 1
   attack02DamageModifier: 1.4
 --- !u!1 &8877576960154901462

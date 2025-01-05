@@ -784,10 +784,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 7.0707173
+  m_Radius: 13.884929
   m_Height: 39.49459
   m_Direction: 2
-  m_Center: {x: -12.2134075, y: -1.9438659, z: -0.6386383}
+  m_Center: {x: -12.213387, y: -0.8597463, z: -0.6386383}
 --- !u!1 &2326180123489165684 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100104, guid: d288a0e4a2d923b46898986e979da643, type: 3}
@@ -812,10 +812,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 16.02009
-  m_Height: 41.018238
+  m_Radius: 20.070908
+  m_Height: 67.194565
   m_Direction: 2
-  m_Center: {x: 6.3596134, y: -1.9438664, z: 0.40690532}
+  m_Center: {x: 6.3596044, y: -2.191965, z: -1.7055342}
 --- !u!1 &2326180123489165686 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100106, guid: d288a0e4a2d923b46898986e979da643, type: 3}
@@ -840,10 +840,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 14.275367
-  m_Height: 41.25971
+  m_Radius: 20.33682
+  m_Height: 60.372868
   m_Direction: 2
-  m_Center: {x: -7.039744, y: -1.9438651, z: -0.65209067}
+  m_Center: {x: -7.0397434, y: 2.402845, z: -0.43070108}
 --- !u!1 &2326180123489165688 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100100, guid: d288a0e4a2d923b46898986e979da643, type: 3}
@@ -1343,7 +1343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2409615037
+  GlobalObjectIdHash: 4248610217
   InScenePlacedSourceGlobalObjectIdHash: 2409615037
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1422,10 +1422,10 @@ MonoBehaviour:
   rotationSpeed: 15
   sprintingStaminaCost: 2
   jumpStaminaCost: 25
-  jumpHeight: 4
+  jumpHeight: 1
   jumpForwardSpeed: 5
   freeFallSpeed: 2
-  dodgeStaminaCost: 2
+  dodgeStaminaCost: 15
 --- !u!114 &-1988224386303523806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1439,6 +1439,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isActive:
+    m_InternalValue: 1
   networkPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
   networkRotation:

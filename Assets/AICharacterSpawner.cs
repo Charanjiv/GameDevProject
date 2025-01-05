@@ -1,4 +1,6 @@
+using System.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AICharacterSpawner : MonoBehaviour
@@ -9,16 +11,19 @@ public class AICharacterSpawner : MonoBehaviour
 
     private void Awake()
     {
+
     }
 
     private void Start()
     {
+        characterGameObject.transform.position = transform.position;
         WorldAIManager.instance.SpawnCharacter(this);
         gameObject.SetActive(false);
     }
 
     public void AttemptToSpawnCharacter()
     {
+        
         if (characterGameObject != null)
         {
             instantiatedGameObject = Instantiate(characterGameObject);
@@ -27,4 +32,6 @@ public class AICharacterSpawner : MonoBehaviour
             instantiatedGameObject.GetComponent<NetworkObject>().Spawn();
         }
     }
+
+
 }
