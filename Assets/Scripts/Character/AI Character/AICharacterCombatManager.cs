@@ -76,7 +76,7 @@ public class AICharacterCombatManager : CharacterCombatManager
         }
     }
 
-    public void PivotTowardsTarget(AICharacterManager aiCharacter)
+    public virtual void PivotTowardsTarget(AICharacterManager aiCharacter)
     {
         //  PLAY A PIVOT ANIMATION DEPENDING ON VIEWABLE ANGLE OF TARGET
         if (aiCharacter.isPerformingAction)

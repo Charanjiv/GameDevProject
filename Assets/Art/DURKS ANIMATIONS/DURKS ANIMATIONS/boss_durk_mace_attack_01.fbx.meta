@@ -62,20 +62,6 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.21980107
-        functionName: EnableCanRotate
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.36303717
-        functionName: DisableCanRotate
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0.38818565
         functionName: OpenClubDamageCollider
         data: 
@@ -85,6 +71,20 @@ ModelImporter:
         messageOptions: 0
       - time: 0.42405063
         functionName: CloseClubDamageCollider
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
+        functionName: SetAttack01Damage
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.3875969
+        functionName: OpenClubDamageCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

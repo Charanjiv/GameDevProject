@@ -25,6 +25,9 @@ public class CombatStanceState : AIState
     [Header("Engagement Distance")]
     [SerializeField] protected float maximumEngagementDistance = 5; //  The distance we have to be away from the target before we enter the pursue target state
 
+    [Header("Enable Pivot")]
+    [SerializeField] protected bool enablePivot;
+
     public override AIState Tick(AICharacterManager aiCharacter)
     {
         if (aiCharacter.isPerformingAction)
@@ -34,12 +37,14 @@ public class CombatStanceState : AIState
             aiCharacter.navMeshAgent.enabled = true;
 
         //  IF YOU WANT THE AI CHARACTER TO FACE AND TURN TOWARDS ITS TARGET WHEN ITS OUTSIDE IT'S FOV INCLUDE THIS
-        if (!aiCharacter.aiCharacterNetworkManager.isMoving.Value)
+        if (enablePivot)
         {
-            if (aiCharacter.aiCharacterCombatManager.viewableAngle < -30 || aiCharacter.aiCharacterCombatManager.viewableAngle > 30)
-                aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+            if (!aiCharacter.aiCharacterNetworkManager.isMoving.Value)
+            {
+                if (aiCharacter.aiCharacterCombatManager.viewableAngle < -30 || aiCharacter.aiCharacterCombatManager.viewableAngle > 30)
+                    aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+            }
         }
-
         //  ROTATE TO FACE OUR TARGET
         aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
 
