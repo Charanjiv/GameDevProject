@@ -36,7 +36,6 @@ public class DamageCollider : MonoBehaviour
 
             //  CHECK IF TARGET IS BLOCKING
 
-            //  CHECK IF TARGET IS INVULNERABLE
 
             DamageTarget(damageTarget);
         }
@@ -72,3 +71,4 @@ public class DamageCollider : MonoBehaviour
         charactersDamaged.Clear();      //  WE RESET THE CHARACTERS THAT HAVE BEEN HIT WHEN WE RESET THE COLLIDER, SO THEY MAY BE HIT AGAIN
     }
 }
+

@@ -3,37 +3,55 @@ using UnityEngine;
 
 public class AIDurkCombatManager : AICharacterCombatManager
 {
-    [Header("Damage Colliders")]
+    AIDurkCharacterManager durkManager;
+
+    [Header("Damage Collider")]
     [SerializeField] DurkClubDamageCollider clubDamageCollider;
-    //[SerializeField] Transform durksStompingFoot;
-    [SerializeField] float stompAttackAOERadius = 1.5f;
+    [SerializeField] DurksStompCollider stompCollider;
+    public float stompAttackAOERadius = 1.5f;
 
     [Header("Damage")]
     [SerializeField] int baseDamage = 25;
     [SerializeField] float attack01DamageModifier = 1.0f;
     [SerializeField] float attack02DamageModifier = 1.4f;
     [SerializeField] float attack03DamageModifier = 1.6f;
-    [SerializeField] float stompDamage = 25;
+    public float stompDamage = 25;
+
+
+
+    [Header("VFX")]
+    public GameObject durkImpactVFX;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        durkManager = GetComponent<AIDurkCharacterManager>();
+        
+    }
 
     public void SetAttack01Damage()
     {
+        aiCharacter.characterSoundFXManager.PlayAttackGruntSoundFX();
         clubDamageCollider.physicalDamage = baseDamage * attack01DamageModifier;
     }
 
     public void SetAttack02Damage()
     {
+        aiCharacter.characterSoundFXManager.PlayAttackGruntSoundFX();
         clubDamageCollider.physicalDamage = baseDamage * attack02DamageModifier;
     }
 
     public void SetAttack03Damage()
     {
+        aiCharacter.characterSoundFXManager.PlayAttackGruntSoundFX();
         clubDamageCollider.physicalDamage = baseDamage * attack03DamageModifier;
     }
 
     public void OpenClubDamageCollider()
     {
-        aiCharacter.characterSoundFXManager.PlayAttackGrunt();
         clubDamageCollider.EnableDamageCollider();
+        durkManager.characterSoundFXManager.PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(durkManager.durkSoundFXManager.clubWhooshes));
     }
 
     public void CloseClubDamageCollider()
@@ -41,59 +59,32 @@ public class AIDurkCombatManager : AICharacterCombatManager
         clubDamageCollider.DisableDamageCollider();
     }
 
-    //public void ActivateDurkStomp()
-    //{
-    //    Collider[] colliders = Physics.OverlapSphere(durksStompingFoot.position, stompAttackAOERadius, WorldUtilityManager.Instance.GetCharacterLayers());
-    //    List<CharacterManager> charactersDamaged = new List<CharacterManager>();
+    public void ActivateDurkStomp()
+    {
+        stompCollider.StompAttack();
+    }
 
-    //    foreach (var collider in colliders)
-    //    {
-    //        CharacterManager character = collider.GetComponentInParent<CharacterManager>();
+    public override void PivotTowardsTarget(AICharacterManager aiCharacter)
+    {
+        //  PLAY A PIVOT ANIMATION DEPENDING ON VIEWABLE ANGLE OF TARGET
+        if (aiCharacter.isPerformingAction)
+            return;
 
-    //        if (character != null)
-    //        {
-    //            if (charactersDamaged.Contains(character))
-    //                continue;
-
-    //            charactersDamaged.Add(character);
-
-    //            //  WE ONLY PROCESS DAMAGE IF THE CHARACTER "ISOWNER" SO THAT THEY ONLY GET DAMAGED IF THE COLLIDER CONNECTS ON THEIR CLIENT
-    //            //  MEANING IF YOU ARE HIT ON THE HOSTS SCREEN BUT NOT ON YOUR OWN, YOU WILL NOT BE HIT
-    //            if (character.IsOwner)
-    //            {
-    //                //  CHECK FOR BLOCK
-
-    //                TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeDamageEffect);
-    //                damageEffect.physicalDamage = stompDamage;
-    //                damageEffect.poiseDamage = stompDamage;
-
-    //                character.characterEffectsManager.ProcessInstantEffect(damageEffect);
-    //            }
-    //        }
-    //    }
-    //}
-
-    //public override void PivotTowardsTarget(AICharacterManager aiCharacter)
-    //{
-    //    //  PLAY A PIVOT ANIMATION DEPENDING ON VIEWABLE ANGLE OF TARGET
-    //    if (aiCharacter.isPerformingAction)
-    //        return;
-
-    //    if (viewableAngle >= 61 && viewableAngle <= 110)
-    //    {
-    //        aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Right_90", true);
-    //    }
-    //    else if (viewableAngle <= -61 && viewableAngle >= -110)
-    //    {
-    //        aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Left_90", true);
-    //    }
-    //    else if (viewableAngle >= 146 && viewableAngle <= 180)
-    //    {
-    //        aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Right_180", true);
-    //    }
-    //    else if (viewableAngle <= -146 && viewableAngle >= -180)
-    //    {
-    //        aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Left_180", true);
-    //    }
-    //}
+        if (viewableAngle >= 61 && viewableAngle <= 110)
+        {
+            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Right_90", true);
+        }
+        else if (viewableAngle <= -61 && viewableAngle >= -110)
+        {
+            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Left_90", true);
+        }
+        else if (viewableAngle >= 146 && viewableAngle <= 180)
+        {
+            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Right_180", true);
+        }
+        else if (viewableAngle <= -146 && viewableAngle >= -180)
+        {
+            aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Left_180", true);
+        }
+    }
 }

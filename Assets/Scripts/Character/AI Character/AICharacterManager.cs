@@ -4,6 +4,9 @@ using UnityEngine.AI;
 
 public class AICharacterManager : CharacterManager
 {
+    [Header("Character Name")]
+    public string characterName = "";
+
     [HideInInspector] public AICharacterNetworkManager aiCharacterNetworkManager;
     [HideInInspector] public AICharacterCombatManager aiCharacterCombatManager;
     [HideInInspector] public AICharacterLocomotionManager aiCharacterLocomotionManager;
@@ -12,7 +15,7 @@ public class AICharacterManager : CharacterManager
     public NavMeshAgent navMeshAgent;
 
     [Header("Current State")]
-    [SerializeField] AIState currentState;
+    [SerializeField] protected AIState currentState;
 
     [Header("States")]
     public IdleState idle;
@@ -24,14 +27,23 @@ public class AICharacterManager : CharacterManager
     {
         base.Awake();
 
-        aiCharacterCombatManager = GetComponent<AICharacterCombatManager>();
         aiCharacterNetworkManager = GetComponent<AICharacterNetworkManager>();
+        aiCharacterCombatManager = GetComponent<AICharacterCombatManager>();
         aiCharacterLocomotionManager = GetComponent<AICharacterLocomotionManager>();
-        //  USE A COPY OF THE SCRIPTABLE OBJECTS, SO THE ORIGINALS ARE NOT MODIFIED
-        idle = Instantiate(idle);
-        pursueTarget = Instantiate(pursueTarget);
 
-        currentState = idle;
+        navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (IsOwner)
+        {
+            idle = Instantiate(idle);
+            pursueTarget = Instantiate(pursueTarget);
+            currentState = idle;
+        }
     }
 
     protected override void Update()
@@ -68,7 +80,6 @@ public class AICharacterManager : CharacterManager
             aiCharacterCombatManager.targetsDirection = aiCharacterCombatManager.currentTarget.transform.position - transform.position;
             aiCharacterCombatManager.viewableAngle = WorldUtilityManager.Instance.GetAngleOfTarget(transform, aiCharacterCombatManager.targetsDirection);
             aiCharacterCombatManager.distanceFromTarget = Vector3.Distance(transform.position, aiCharacterCombatManager.currentTarget.transform.position);
-
         }
 
         if (navMeshAgent.enabled)

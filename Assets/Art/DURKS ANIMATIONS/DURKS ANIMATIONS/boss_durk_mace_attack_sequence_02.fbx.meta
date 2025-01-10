@@ -69,15 +69,22 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.35536754
+      - time: 0.3593836
         functionName: DisableCanRotate
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.36708862
+      - time: 0.37512076
         functionName: ActivateDurkStomp
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.39447713
+        functionName: PlayStompImpactSoundFX
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -106,6 +113,13 @@ ModelImporter:
         messageOptions: 0
       - time: 0.6398473
         functionName: CloseClubDamageCollider
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.64599484
+        functionName: PlayClubImpactSoundFX
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

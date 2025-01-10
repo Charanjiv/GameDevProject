@@ -12,6 +12,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
     public float heavy_Attack_02_Modifier;
     public float charge_Attack_01_Modifier;
     public float charge_Attack_02_Modifier;
+
     protected override void Awake()
     {
         base.Awake();
@@ -40,7 +41,6 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
             //  CHECK IF TARGET IS BLOCKING
 
-            //  CHECK IF TARGET IS INVULNERABLE
 
             DamageTarget(damageTarget);
         }
@@ -115,3 +115,4 @@ public class MeleeWeaponDamageCollider : DamageCollider
         //  IF ATTACK IS A FULLY CHARGED HEAVY, MULTIPLY BY FULL CHARGE MODIFIER AFTER NORMAL MODIFIER HAVE BEEN CALCULATED
     }
 }
+

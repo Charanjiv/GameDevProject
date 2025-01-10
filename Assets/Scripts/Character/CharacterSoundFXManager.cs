@@ -10,6 +10,9 @@ public class CharacterSoundFXManager : MonoBehaviour
     [Header("Attack Grunts")]
     [SerializeField] protected AudioClip[] attackGrunts;
 
+    [Header("FootSteps")]
+    [SerializeField] protected AudioClip[] footSteps;
+
     protected virtual void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -32,13 +35,21 @@ public class CharacterSoundFXManager : MonoBehaviour
         audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
     }
 
-    public virtual void PlayDamageGrunt()
+    public virtual void PlayDamageGruntSoundFX()
     {
-        PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(damageGrunts));
+        if (damageGrunts.Length > 0)
+            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(damageGrunts));
     }
 
-    public virtual void PlayAttackGrunt()
+    public virtual void PlayAttackGruntSoundFX()
     {
-        PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(attackGrunts));
+        if (attackGrunts.Length > 0)
+            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(attackGrunts));
+    }
+
+    public virtual void PlayFootStepSoundFX()
+    {
+        if (footSteps.Length > 0)
+            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(footSteps));
     }
 }

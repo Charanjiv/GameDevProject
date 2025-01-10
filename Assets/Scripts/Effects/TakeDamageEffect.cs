@@ -38,18 +38,17 @@ public class TakeDamageEffect : InstantCharacterEffects
 
     public override void ProcessEffect(CharacterManager character)
     {
+        if (character.characterNetworkManager.isInvulnerable.Value)
+            return;
+
         base.ProcessEffect(character);
 
         //  IF THE CHARACTER IS DEAD, NO ADDITIONAL DAMAGE EFFECTS SHOULD BE PROCESSED
         if (character.isDead.Value)
             return;
 
-        //  CHECK FOR "INVULNERABILITY"
-
         CalculateDamage(character);
         PlayDirectionalBasedDamageAnimation(character);
-        //  CHECK WHICH DIRECTIONAL DAMAGE CAME FROM
-        //  PLAY A DAMAGE ANIMATION
         //  CHECK FOR BUILD UPS (POISON, BLEED ECT)
         PlayDamageSFX(character);
         PlayDamageVFX(character);
@@ -61,8 +60,6 @@ public class TakeDamageEffect : InstantCharacterEffects
     {
         if (!character.IsOwner)
             return;
-
-
 
         if (characterCausingDamage != null)
         {
@@ -100,8 +97,7 @@ public class TakeDamageEffect : InstantCharacterEffects
         AudioClip physicalDamageSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.physicalDamageSFX);
 
         character.characterSoundFXManager.PlaySoundFX(physicalDamageSFX);
-        character.characterSoundFXManager.PlayDamageGrunt();
-
+        character.characterSoundFXManager.PlayDamageGruntSoundFX();
         //  IF FIRE DAMAGE IS GREATER THAN 0, PLAY BURN SFX
         //  IF LIGHTNING DAMAGE IS GREATER THAN 0, PLAY ZAP SFX
     }
@@ -119,27 +115,22 @@ public class TakeDamageEffect : InstantCharacterEffects
 
         if (angleHitFrom >= 145 && angleHitFrom <= 180)
         {
-            //  FRONT ANNIMATION
             damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.forward_Medium_Damage);
         }
         else if (angleHitFrom <= -145 && angleHitFrom >= -180)
         {
-            //  FRONT ANIMATION
             damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.forward_Medium_Damage);
         }
         else if (angleHitFrom >= -45 && angleHitFrom <= 45)
         {
-            //  BACK ANIMATION
             damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.backward_Medium_Damage);
         }
         else if (angleHitFrom >= -144 && angleHitFrom <= -45)
         {
-            //  LEFT ANIMATION
             damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.left_Medium_Damage);
         }
         else if (angleHitFrom >= 45 && angleHitFrom <= 144)
         {
-            //  RIGHT ANIMATION
             damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.right_Medium_Damage);
         }
 

@@ -3,6 +3,7 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Linq;
 
 public class WorldAIManager : MonoBehaviour
 {
@@ -10,7 +11,10 @@ public class WorldAIManager : MonoBehaviour
 
     [Header("Characters")]
     [SerializeField] List<AICharacterSpawner> aiCharacterSpawners;
-    [SerializeField] List<GameObject> spawnedInCharacters;
+    [SerializeField] List<AICharacterManager> spawnedInCharacters;
+
+    [Header("Bosses")]
+    [SerializeField] List<AIBossCharacterManager> spawnedInBosses;
 
     private void Awake()
     {
@@ -26,11 +30,34 @@ public class WorldAIManager : MonoBehaviour
 
     public void SpawnCharacter(AICharacterSpawner aiCharacterSpawner)
     {
-        //if (NetworkManager.Singleton.IsServer)
-        //{
+        if (NetworkManager.Singleton.IsServer)
+        {
             aiCharacterSpawners.Add(aiCharacterSpawner);
             aiCharacterSpawner.AttemptToSpawnCharacter();
-        //}
+        }
+    }
+
+    public void AddCharacterToSpawnedCharactersList(AICharacterManager character)
+    {
+        if (spawnedInCharacters.Contains(character))
+            return;
+
+        spawnedInCharacters.Add(character);
+
+        AIBossCharacterManager bossCharacter = character as AIBossCharacterManager;
+
+        if (bossCharacter != null)
+        {
+            if (spawnedInBosses.Contains(bossCharacter))
+                return;
+
+            spawnedInBosses.Add(bossCharacter);
+        }
+    }
+
+    public AIBossCharacterManager GetBossCharacterByID(int ID)
+    {
+        return spawnedInBosses.FirstOrDefault(boss => boss.bossID == ID);
     }
 
     private void DespawnAllCharacters()
@@ -40,7 +67,6 @@ public class WorldAIManager : MonoBehaviour
             character.GetComponent<NetworkObject>().Despawn();
         }
     }
-
 
     private void DisableAllCharacters()
     {

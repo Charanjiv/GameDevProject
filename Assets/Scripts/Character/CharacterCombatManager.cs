@@ -4,7 +4,6 @@ using UnityEngine.TextCore.Text;
 
 public class CharacterCombatManager : NetworkBehaviour
 {
-
     protected CharacterManager character;
 
     [Header("Last Attack Animation Performed")]
@@ -31,7 +30,6 @@ public class CharacterCombatManager : NetworkBehaviour
             if (newTarget != null)
             {
                 currentTarget = newTarget;
-                //  TELL THE NETWORK WE HAVE A TARGET, AND WHO IT IS
                 character.characterNetworkManager.currentTargetNetworkObjectID.Value = newTarget.GetComponent<NetworkObject>().NetworkObjectId;
             }
             else
@@ -39,5 +37,17 @@ public class CharacterCombatManager : NetworkBehaviour
                 currentTarget = null;
             }
         }
+    }
+
+    public void EnableIsInvulnerable()
+    {
+        if (character.IsOwner)
+            character.characterNetworkManager.isInvulnerable.Value = true;
+    }
+
+    public void DisableIsInvulnerable()
+    {
+        if (character.IsOwner)
+            character.characterNetworkManager.isInvulnerable.Value = false;
     }
 }

@@ -5,28 +5,20 @@ using UnityEngine.AI;
 [CreateAssetMenu(menuName = "A.I/States/Combat Stance")]
 public class CombatStanceState : AIState
 {
-    //  1.Select an attack for the attack state, depending on distance and angle of target in relation to character.
-    //  2.Process any combat logic here while waiting to attack.
-    //  3.If target moves out of combat  range, switch to pursuit target state.
-    //  4.If target is no longer present, switch to idle state.
-
     [Header("Attacks")]
     public List<AICharacterAttackAction> aiCharacterAttacks;    //  A list of all possible attacks this character can do
-    protected List<AICharacterAttackAction> potentialAttacks;     //  All attacks possible in this situation (based on angle, distance ect)
-    private AICharacterAttackAction choosenAttack;
-    private AICharacterAttackAction previousAttack;
+    [SerializeField] protected List<AICharacterAttackAction> potentialAttacks;     //  All attacks possible in this situation (based on angle, distance ect)
+    [SerializeField] private AICharacterAttackAction choosenAttack;
+    [SerializeField] private AICharacterAttackAction previousAttack;
     protected bool hasAttack = false;
 
     [Header("Combo")]
     [SerializeField] protected bool canPerformCombo = false;    // If the character can perform a combo attack, after the initial attack
-    [SerializeField] protected int chanceToPerformCombo = 25;   // The chance (in %) of the character to perform a combo on the next attack
+    [SerializeField] protected int chanceToPerformCombo = 25;   // The chance (in percent) of the character to perform a combo on the next attack
     protected bool hasRolledForComboChance = false;      // If we have already rolled for the chance during this state
 
     [Header("Engagement Distance")]
-    [SerializeField] protected float maximumEngagementDistance = 5; //  The distance we have to be away from the target before we enter the pursue target state
-
-    [Header("Enable Pivot")]
-    [SerializeField] protected bool enablePivot;
+    [SerializeField] public float maximumEngagementDistance = 5; //  The distance we have to be away from the target before we enter the pursue target state
 
     public override AIState Tick(AICharacterManager aiCharacter)
     {
@@ -37,7 +29,7 @@ public class CombatStanceState : AIState
             aiCharacter.navMeshAgent.enabled = true;
 
         //  IF YOU WANT THE AI CHARACTER TO FACE AND TURN TOWARDS ITS TARGET WHEN ITS OUTSIDE IT'S FOV INCLUDE THIS
-        if (enablePivot)
+        if (aiCharacter.aiCharacterCombatManager.enablePivot)
         {
             if (!aiCharacter.aiCharacterNetworkManager.isMoving.Value)
             {
@@ -45,7 +37,7 @@ public class CombatStanceState : AIState
                     aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
             }
         }
-        //  ROTATE TO FACE OUR TARGET
+
         aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
 
         //  IF OUR TARGET IS NO LONGER PRESENT, SWITCH BACK TO IDLE
@@ -77,14 +69,6 @@ public class CombatStanceState : AIState
 
     protected virtual void GetNewAttack(AICharacterManager aiCharacter)
     {
-        /*
-         *  1. Sort through all possible attacks
-         *  2. Remove attacks that can't be used in this situation 
-         *  3. Place remaining attacks into a list
-         *  4. Pick one of the remaining attacks randomely, based on weight
-         *  5. Select this attack and pass it to the attack state
-         */
-
         potentialAttacks = new List<AICharacterAttackAction>();
 
         foreach (var potentialAttack in aiCharacterAttacks)

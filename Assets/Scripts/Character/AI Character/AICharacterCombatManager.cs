@@ -7,6 +7,9 @@ public class AICharacterCombatManager : CharacterCombatManager
     [Header("Action Recovery")]
     public float actionRecoveryTimer = 0;
 
+    [Header("Pivot")]
+    public bool enablePivot = true;
+
     [Header("Target Information")]
     public float distanceFromTarget;
     public float viewableAngle;
@@ -23,11 +26,12 @@ public class AICharacterCombatManager : CharacterCombatManager
     protected override void Awake()
     {
         base.Awake();
+
         aiCharacter = GetComponent<AICharacterManager>();
         lockOnTransform = GetComponentInChildren<LockOnTransform>().transform;
     }
 
-    public void FindATargetViaLineOfSight(AICharacterManager aiCharacter)
+    public virtual void FindATargetViaLineOfSight(AICharacterManager aiCharacter)
     {
         if (currentTarget != null)
             return;
@@ -69,7 +73,9 @@ public class AICharacterCombatManager : CharacterCombatManager
                         targetsDirection = targetCharacter.transform.position - transform.position;
                         viewableAngle = WorldUtilityManager.Instance.GetAngleOfTarget(transform, targetsDirection);
                         aiCharacter.characterCombatManager.SetTarget(targetCharacter);
-                        PivotTowardsTarget(aiCharacter);
+
+                        if (enablePivot)
+                            PivotTowardsTarget(aiCharacter);
                     }
                 }
             }
