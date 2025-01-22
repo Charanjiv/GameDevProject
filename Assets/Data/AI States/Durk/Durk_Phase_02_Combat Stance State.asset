@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6deffd964699d249b290f743d7bed9b, type: 3}
-  m_Name: Durk_Combat Stance State
+  m_Name: Durk_Phase_02_Combat Stance State
   m_EditorClassIdentifier: 
   aiCharacterAttacks:
-  - {fileID: 11400000, guid: e4555b20bdbb74b45b6a85c84bb6e15d, type: 2}
-  - {fileID: 11400000, guid: 672670d5a35400c4688a66e8b306f8a9, type: 2}
-  - {fileID: 11400000, guid: b73c04f57a7b7fb4cb1d209c0b46eb7c, type: 2}
+  - {fileID: 11400000, guid: 4490dde830d0d364eb3a533ce93b8996, type: 2}
+  - {fileID: 11400000, guid: 2650f924daa0d6e47af4e6e96e676680, type: 2}
+  - {fileID: 11400000, guid: 9702aa7bf6215c54d8d0da7ced648eab, type: 2}
   potentialAttacks:
-  - {fileID: 11400000, guid: e4555b20bdbb74b45b6a85c84bb6e15d, type: 2}
-  - {fileID: 11400000, guid: 672670d5a35400c4688a66e8b306f8a9, type: 2}
-  - {fileID: 11400000, guid: b73c04f57a7b7fb4cb1d209c0b46eb7c, type: 2}
+  - {fileID: 11400000, guid: 4490dde830d0d364eb3a533ce93b8996, type: 2}
+  - {fileID: 11400000, guid: 2650f924daa0d6e47af4e6e96e676680, type: 2}
+  - {fileID: 11400000, guid: 9702aa7bf6215c54d8d0da7ced648eab, type: 2}
   choosenAttack: {fileID: 0}
   previousAttack: {fileID: 0}
   canPerformCombo: 0

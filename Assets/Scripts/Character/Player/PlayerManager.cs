@@ -14,6 +14,9 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
 
+    [Header("DEBUG MENU")]
+    [SerializeField] bool respawnCharacter = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -42,6 +45,8 @@ public class PlayerManager : CharacterManager
 
         //  REGEN STAMINA
         playerStatsManager.RegenerateStamina();
+
+        DebugMenu();
     }
 
     protected override void LateUpdate()
@@ -159,7 +164,7 @@ public class PlayerManager : CharacterManager
         {
             PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
         }
-
+        respawnCharacter = true;
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
 
         //  CHECK FOR PLAYERS THAT ARE ALIVE, IF 0 RESPAWN CHARACTERS
@@ -174,6 +179,7 @@ public class PlayerManager : CharacterManager
             isDead.Value = false;
             playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
             playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
+            playerNetworkManager.transform.localPosition = new Vector3(0, 0, 0);
             //  RESTORE FOCUS POINTS
 
             //  PLAY REBIRTH EFFECTS
@@ -226,6 +232,16 @@ public class PlayerManager : CharacterManager
         if (playerNetworkManager.isLockedOn.Value)
         {
             playerNetworkManager.OnLockOnTargetIDChange(0, playerNetworkManager.currentTargetNetworkObjectID.Value);
+        }
+    }
+
+    //  DEBUG DELETE LATER
+    private void DebugMenu()
+    {
+        if (respawnCharacter)
+        {
+            respawnCharacter = false;
+            ReviveCharacter();
         }
     }
 }

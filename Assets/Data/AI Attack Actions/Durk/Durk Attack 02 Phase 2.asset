@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 466b639aed3ded9418b1067483ab181b, type: 3}
-  m_Name: Durk Attack 03
+  m_Name: Durk Attack 02 Phase 2
   m_EditorClassIdentifier: 
-  attackAnimation: Attack_03
+  attackAnimation: Attack_02
   comboAction: {fileID: 0}
-  attackType: 0
+  attackType: 1
   attackWeight: 50
-  actionRecoveryTime: 1
+  actionRecoveryTime: 0.5
   minimumAttackAngle: -35
   maximumAttackAngle: 35
   minimumAttackDistance: 0.1

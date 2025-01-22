@@ -10,6 +10,12 @@ public class PlayerUIPopUpManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI youDiedPopUpText;
     [SerializeField] CanvasGroup youDiedPopUpCanvasGroup;   //  Allows us to set the alpha to fade over time
 
+    [Header("BOSS DEFEATED Pop Up")]
+    [SerializeField] GameObject bossDefeatedPopUpGameObject;
+    [SerializeField] TextMeshProUGUI bossDefeatedPopUpBackgroundText;
+    [SerializeField] TextMeshProUGUI bossDefeatedPopUpText;
+    [SerializeField] CanvasGroup bossDefeatedPopUpCanvasGroup;
+
     public void SendYouDiedPopUp()
     {
         //  ACTIVATE POST PROCESSING EFFECTS
@@ -19,6 +25,17 @@ public class PlayerUIPopUpManager : MonoBehaviour
         StartCoroutine(StretchPopUpTextOverTime(youDiedPopUpBackgroundText, 8, 19));
         StartCoroutine(FadeInPopUpOverTime(youDiedPopUpCanvasGroup, 5));
         StartCoroutine(WaitThenFadeOutPopUpOverTime(youDiedPopUpCanvasGroup, 2, 5));
+    }
+
+    public void SendBossDefeatedPopUp(string bossDefeatedMessage)
+    {
+        bossDefeatedPopUpText.text = bossDefeatedMessage;
+        bossDefeatedPopUpBackgroundText.text = bossDefeatedMessage;
+        bossDefeatedPopUpGameObject.SetActive(true);
+        bossDefeatedPopUpBackgroundText.characterSpacing = 0;
+        StartCoroutine(StretchPopUpTextOverTime(bossDefeatedPopUpBackgroundText, 8, 19));
+        StartCoroutine(FadeInPopUpOverTime(bossDefeatedPopUpCanvasGroup, 5));
+        StartCoroutine(WaitThenFadeOutPopUpOverTime(bossDefeatedPopUpCanvasGroup, 2, 5));
     }
 
     private IEnumerator StretchPopUpTextOverTime(TextMeshProUGUI text, float duration, float stretchAmount)

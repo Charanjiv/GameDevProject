@@ -785,6 +785,8 @@ MonoBehaviour:
   combatStance: {fileID: 11400000, guid: 428e26bbdab35e548bff5be58e5cd25b, type: 2}
   attack: {fileID: 11400000, guid: 00d4f120e554c4c4aabb8f70f7b0aa72, type: 2}
   bossID: 0
+  bossIntroClip: {fileID: 8300000, guid: 275a420e6132e6e4c81bf73a19654dc6, type: 3}
+  bossBattleLoopClip: {fileID: 8300000, guid: aaf5f01cb6ba42141bf00bb46f72a68a, type: 3}
   bossFightIsActive:
     m_InternalValue: 0
   hasBeenAwakened:
@@ -794,6 +796,9 @@ MonoBehaviour:
   fogWalls: []
   sleepAnimation: Sleep_01
   awakenAnimation: Awaken_01
+  minimumHealthPercentageToShift: 50
+  phaseShiftAnimation: Phase_Change_01
+  phase02CombatStanceState: {fileID: 11400000, guid: b8c8cce7709cc7b4e841b41e3582e101, type: 2}
   sleepState: {fileID: 11400000, guid: 2406c2e9f9ab4db49b6fc269df609550, type: 2}
   durkSoundFXManager: {fileID: 0}
   durkCombatManager: {fileID: 0}
@@ -831,7 +836,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7323055625039507286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3e51185cba6bd6448a876d440ce6ac9, type: 3}
+  m_Script: {fileID: 11500000, guid: f008f1f208b56014d9d6026c32c8df23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
