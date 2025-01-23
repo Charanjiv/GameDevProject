@@ -11,6 +11,7 @@ public class AIBossCharacterNetworkManager : AICharacterNetworkManager
         aiBossCharacter = GetComponent<AIBossCharacterManager>();
     }
 
+
     public override void CheckHP(int oldValue, int newValue)
     {
         base.CheckHP(oldValue, newValue);

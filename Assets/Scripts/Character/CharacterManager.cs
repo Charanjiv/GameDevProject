@@ -24,6 +24,7 @@ public class CharacterManager : NetworkBehaviour
 
     [Header("Flags")]
     public bool isPerformingAction = false;
+    [HideInInspector] public float killCount;
 
     protected virtual void Awake()
     {
@@ -44,6 +45,7 @@ public class CharacterManager : NetworkBehaviour
 
     protected virtual void Start()
     {
+        killCount = 0;
         IgnoreMyOwnColliders();
         characterNetworkManager.vitality.Value = 15;
         characterNetworkManager.endurance.Value = 10;
@@ -167,5 +169,11 @@ public class CharacterManager : NetworkBehaviour
             }
         }
     }
+
+    //public void KillCount()
+    //{
+    //    killCount += 1;
+    //    Debug.Log("1 Enemy Killed");
+    //}
 }
 

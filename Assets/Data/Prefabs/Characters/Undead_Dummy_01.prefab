@@ -2504,7 +2504,7 @@ Transform:
   m_GameObject: {fileID: 8533729570112392486}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 0, z: 26}
+  m_LocalPosition: {x: -4, y: 0, z: 6.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2636,6 +2636,8 @@ MonoBehaviour:
   characterLocomotionManager: {fileID: 0}
   characterGroup: 1
   isPerformingAction: 0
+  killCount: 0
+  characterName: 
   aiCharacterNetworkManager: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
@@ -2701,6 +2703,8 @@ MonoBehaviour:
   moveAmount:
     m_InternalValue: 0
   currentTargetNetworkObjectID:
+    m_InternalValue: 0
+  isInvulnerable:
     m_InternalValue: 0
   isLockedOn:
     m_InternalValue: 0
@@ -2871,6 +2875,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 553a0fad3eb216c498b820191601b9af, type: 3}
   - {fileID: 8300000, guid: a8ea84cfab0a6bd41903552a2e8e0933, type: 3}
   - {fileID: 8300000, guid: 048c60eecc57427428b786d7545e657a, type: 3}
+  footSteps: []
 --- !u!114 &5832891823886290040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2940,6 +2945,7 @@ MonoBehaviour:
   currentAttackType: 0
   lockOnTransform: {fileID: 8509365212511272843}
   actionRecoveryTimer: 0
+  enablePivot: 1
   distanceFromTarget: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}

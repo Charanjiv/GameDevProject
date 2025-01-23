@@ -38,6 +38,7 @@ public class AIBossCharacterManager : AICharacterManager
         base.Awake();
     }
 
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();

@@ -16,6 +16,11 @@ public class PlayerManager : CharacterManager
 
     [Header("DEBUG MENU")]
     [SerializeField] bool respawnCharacter = false;
+    private float pHealth;
+    private float deathCount;
+    private float pKills;
+    [SerializeField] private float totalEnemies;
+
 
     protected override void Awake()
     {
@@ -30,6 +35,8 @@ public class PlayerManager : CharacterManager
         playerInventoryManager = GetComponent<PlayerInventoryManager>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         playerCombatManager = GetComponent<PlayerCombatManager>();
+        deathCount = 0;
+        pKills = 0;
     }
 
     protected override void Update()
@@ -47,6 +54,12 @@ public class PlayerManager : CharacterManager
         playerStatsManager.RegenerateStamina();
 
         DebugMenu();
+        HealthPerformance(pHealth);
+        KillPerformance(pKills);
+        LifePerformance(deathCount);
+        Debug.Log("Health Performance:" + HealthPerformance(pHealth));
+        Debug.Log("Kill Performance:" + KillPerformance(pKills));
+        Debug.Log("Life Performance:" + KillPerformance(deathCount));
     }
 
     protected override void LateUpdate()
@@ -165,8 +178,8 @@ public class PlayerManager : CharacterManager
             PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
         }
         respawnCharacter = true;
+        deathCount++;
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
-
         //  CHECK FOR PLAYERS THAT ARE ALIVE, IF 0 RESPAWN CHARACTERS
     }
 
@@ -243,5 +256,37 @@ public class PlayerManager : CharacterManager
             respawnCharacter = false;
             ReviveCharacter();
         }
+    }
+
+
+
+    private float HealthPerformance(float health)
+    {
+        float currentHealth = playerNetworkManager.currentHealth.Value;
+        float maxHealth = playerNetworkManager.maxHealth.Value;
+        health = currentHealth / maxHealth;
+        return health;
+    }
+
+    private void AccuracyPerformance()
+    {
+
+    }
+
+    private float KillPerformance(float enemyKillsPerformance)
+    {
+        enemyKillsPerformance = DDA_Game_Manager.instance.killCount / totalEnemies;
+        return enemyKillsPerformance;
+}
+
+    private float LifePerformance(float lifePerformance)
+    {
+        lifePerformance = 1 / DDA_Game_Manager.instance.playerDeaths;
+        return lifePerformance;
+    }
+
+    private void OverallPerformance()
+    {
+
     }
 }
