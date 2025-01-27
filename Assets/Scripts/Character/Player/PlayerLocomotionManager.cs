@@ -84,10 +84,13 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     private void HandleGroundedMovement()
     {
+        if (player.characterLocomotionManager.canMove || player.playerLocomotionManager.canRotate)
+        {
+            GetMovementValues();
+        }
+
         if (!player.characterLocomotionManager.canMove)
             return;
-
-        GetMovementValues();
         //  OUR MOVE DIRECTION IS BASED ON OUR CAMERAS FACING PERSPECTIVE & OUR MOVEMENT INPUTS
         moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
         moveDirection = moveDirection + PlayerCamera.instance.transform.right * horizontalMovement;
