@@ -45,6 +45,12 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool RT_Input = false;
     [SerializeField] bool Hold_RT_Input = false;
 
+    [Header("QUED INPUTS")]
+    [SerializeField] private bool input_Que_Is_Active = false;
+    [SerializeField] float default_Que_Input_Time = 0.35f;
+    [SerializeField] float que_Input_Timer = 0;
+    [SerializeField] bool que_RB_Input = false;
+    [SerializeField] bool que_RT_Input = false;
 
     private void Awake()
     {
@@ -130,6 +136,10 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Sprint.performed += i => sprint_Input = true;
             //  RELEASING THE INPUT, SETS THE BOOL TO FALSE
             playerControls.PlayerActions.Sprint.canceled += i => sprint_Input = false;
+
+            //  QUED INPUTS
+            playerControls.PlayerActions.QueRB.performed += i => QueInput(ref que_RB_Input);
+            playerControls.PlayerActions.QueRT.performed += i => QueInput(ref que_RT_Input);
         }
 
         playerControls.Enable();
@@ -176,6 +186,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleChargeRTInput();
         HandleSwitchRightWeaponInput();
         HandleSwitchLeftWeaponInput();
+        HandleQuedInputs();
     }
 
     //  LOCK ON
@@ -413,6 +424,56 @@ public class PlayerInputManager : MonoBehaviour
         {
             switch_Left_Weapon_Input = false;
             player.playerEquipmentManager.SwitchLeftWeapon();
+        }
+    }
+
+    private void QueInput(ref bool quedInput)   //  PASSING A REFERENCE MEANS WE PASS A SPECIFIC BOOL, AND NOT THE VALUE OF THAT BOOL (TRUE OR FALSE)
+    {
+        //  RESET ALL QUED INPUTS SO ONLY ONE CAN QUE AT A TIME
+        que_RB_Input = false;
+        que_RT_Input = false;
+
+        //  CHECK FOR UI WINDOW BEING OPEN, IF ITS OPEN RETURN
+
+        if (player.isPerformingAction || player.playerNetworkManager.isJumping.Value)
+        {
+            quedInput = true;
+            que_Input_Timer = default_Que_Input_Time;
+            input_Que_Is_Active = true;
+        }
+    }
+
+    private void ProcessQuedInput()
+    {
+        if (player.isDead.Value)
+            return;
+
+        if (que_RB_Input)
+            RB_Input = true;
+
+        if (que_RT_Input)
+            RT_Input = true;
+    }
+
+    private void HandleQuedInputs()
+    {
+        if (input_Que_Is_Active)
+        {
+            //  WHILE THE TIMER IS ABOVE 0, KEEP ATTEMPTING TO PRESS THE INPUT
+            if (que_Input_Timer > 0)
+            {
+                que_Input_Timer -= Time.deltaTime;
+                ProcessQuedInput();
+            }
+            else
+            {
+                //  RESET ALL QUED INPUTS
+                que_RB_Input = false;
+                que_RT_Input = false;
+
+                input_Que_Is_Active = false;
+                que_Input_Timer = 0;
+            }
         }
     }
 }
