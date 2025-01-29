@@ -14,6 +14,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
     [HideInInspector] public PlayerInteractionManager playerInteractionManager;
+    
 
     [Header("DEBUG MENU")]
     [SerializeField] bool respawnCharacter = false;
@@ -216,6 +217,7 @@ public class PlayerManager : CharacterManager
             //  PLAY REBIRTH EFFECTS
             playerAnimatorManager.PlayTargetActionAnimation("Empty", false);
         }
+        
     }
 
     public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)

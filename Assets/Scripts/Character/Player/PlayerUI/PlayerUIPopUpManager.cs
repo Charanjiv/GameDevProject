@@ -20,6 +20,12 @@ public class PlayerUIPopUpManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI bossDefeatedPopUpText;
     [SerializeField] CanvasGroup bossDefeatedPopUpCanvasGroup;   //  Allows us to set the alpha to fade over time
 
+    [Header("GRACE RESTORED Pop Up")]
+    [SerializeField] GameObject graceRestoredPopUpGameObject;
+    [SerializeField] TextMeshProUGUI graceRestoredPopUpBackgroundText;
+    [SerializeField] TextMeshProUGUI graceRestoredPopUpText;
+    [SerializeField] CanvasGroup graceRestoredPopUpCanvasGroup;   //  Allows us to set the alpha to fade over time
+
     public void CloseAllPopUpWindows()
     {
         popUpMessageGameObject.SetActive(false);
@@ -56,7 +62,18 @@ public class PlayerUIPopUpManager : MonoBehaviour
         StartCoroutine(WaitThenFadeOutPopUpOverTime(bossDefeatedPopUpCanvasGroup, 2, 5));
     }
 
-    private IEnumerator StretchPopUpTextOverTime(TextMeshProUGUI text, float duration, float stretchAmount)
+    public void SendGraceRestoredPopUp(string graceRestoredMessage)
+    {
+        graceRestoredPopUpText.text = graceRestoredMessage;
+        graceRestoredPopUpBackgroundText.text = graceRestoredMessage;
+        graceRestoredPopUpGameObject.SetActive(true);
+        graceRestoredPopUpBackgroundText.characterSpacing = 0;
+        StartCoroutine(StretchPopUpTextOverTime(graceRestoredPopUpBackgroundText, 8, 19));
+        StartCoroutine(FadeInPopUpOverTime(graceRestoredPopUpCanvasGroup, 5));
+        StartCoroutine(WaitThenFadeOutPopUpOverTime(graceRestoredPopUpCanvasGroup, 2, 5));
+    }
+
+        private IEnumerator StretchPopUpTextOverTime(TextMeshProUGUI text, float duration, float stretchAmount)
     {
         if (duration > 0f)
         {

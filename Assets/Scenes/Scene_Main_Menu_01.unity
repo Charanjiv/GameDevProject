@@ -3961,6 +3961,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   player: {fileID: 0}
   killCount: 0
+  playerDeaths: 0
 --- !u!4 &1769992265
 Transform:
   m_ObjectHideFlags: 0

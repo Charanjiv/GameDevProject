@@ -28,6 +28,9 @@ public class CharacterSaveData
     public int vitality;
     public int endurance;
 
+    [Header("Sites Of Grace")]
+    public SerializableDictionary<int, bool> sitesOfGrace;      //  THE INT IS THE SITE OF GRACE I.D, THE BOOL IS THE "ACTIVATED" STATUS
+
     [Header("Bosses")]
     public SerializableDictionary<int, bool> bossesAwakened;    //  THE INT IS THE BOSS I.D, THE BOOL IS THE AWAKENED STATUS
     public SerializableDictionary<int, bool> bossesDefeated;    //  THE INT IS THE BOSS I.D, THE BOOL IS THE DEFEATED STATUS
@@ -36,5 +39,6 @@ public class CharacterSaveData
     {
         bossesAwakened = new SerializableDictionary<int, bool>();
         bossesDefeated = new SerializableDictionary<int, bool>();
+        sitesOfGrace = new SerializableDictionary<int, bool>();
     }
 }
