@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using Unity.Netcode;
 public class WorldSaveGameManager : MonoBehaviour
 {
     public static WorldSaveGameManager instance;
@@ -249,7 +249,7 @@ public class WorldSaveGameManager : MonoBehaviour
         player.playerNetworkManager.endurance.Value = 10;
 
         SaveGame();
-        StartCoroutine(LoadWorldScene());
+        LoadWorldScene(worldSceneIndex);
     }
 
     public void LoadGame()
@@ -263,7 +263,7 @@ public class WorldSaveGameManager : MonoBehaviour
         saveFileDataWriter.saveFileName = saveFileName;
         currentCharacterData = saveFileDataWriter.LoadSaveFile();
 
-        StartCoroutine(LoadWorldScene());
+        LoadWorldScene(worldSceneIndex);
     }
 
     public void SaveGame()
@@ -329,17 +329,12 @@ public class WorldSaveGameManager : MonoBehaviour
         characterSlot10 = saveFileDataWriter.LoadSaveFile();
     }
 
-    public IEnumerator LoadWorldScene()
+    public void LoadWorldScene(int buildIndex)
     {
-        //  IF YOU JUST WANT 1 WORLD SCENE USE THIS
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
-
-        //  IF YOU WANT TO USE DIFFERENT SCENES FOR LEVELS IN YOUR PROJECT USE THIS
-        //AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
+        string worldScene = SceneUtility.GetScenePathByBuildIndex(buildIndex);
+        NetworkManager.Singleton.SceneManager.LoadScene(worldScene, LoadSceneMode.Single);
 
         player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
-
-        yield return null;
     }
 
     public int GetWorldSceneIndex()
