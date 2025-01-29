@@ -13,6 +13,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerInventoryManager playerInventoryManager;
     [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
+    [HideInInspector] public PlayerInteractionManager playerInteractionManager;
 
     [Header("DEBUG MENU")]
     [SerializeField] bool respawnCharacter = false;
@@ -35,6 +36,7 @@ public class PlayerManager : CharacterManager
         playerInventoryManager = GetComponent<PlayerInventoryManager>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         playerCombatManager = GetComponent<PlayerCombatManager>();
+        playerInteractionManager = GetComponent<PlayerInteractionManager>();
         deathCount = 0;
         pKills = 0;
     }
