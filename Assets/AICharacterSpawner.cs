@@ -8,7 +8,8 @@ public class AICharacterSpawner : MonoBehaviour
     [Header("Character")]
     [SerializeField] GameObject characterGameObject;
     [SerializeField] GameObject instantiatedGameObject;
-
+    private AICharacterManager aICharacter;
+    private Transform startTransform;
     private void Awake()
     {
 
@@ -30,10 +31,30 @@ public class AICharacterSpawner : MonoBehaviour
             instantiatedGameObject.transform.position = transform.position;
             instantiatedGameObject.transform.rotation = transform.rotation;
             instantiatedGameObject.GetComponent<NetworkObject>().Spawn();
-            WorldAIManager.instance.AddCharacterToSpawnedCharactersList(instantiatedGameObject.GetComponent<AICharacterManager>());
+            aICharacter = instantiatedGameObject.GetComponent<AICharacterManager>();
+            if (aICharacter != null)
+            {
+                WorldAIManager.instance.AddCharacterToSpawnedCharactersList(aICharacter);
+            }
+
 
         }
+        
     }
 
+    public void ResetCharacter()
+    {
+        if (instantiatedGameObject != null)
+        {
+            instantiatedGameObject.transform.position = transform.position;
+            instantiatedGameObject.transform.rotation = transform.rotation;
+            aICharacter.aiCharacterNetworkManager.currentHealth.Value = aICharacter.aiCharacterNetworkManager.maxHealth.Value;
+            if (aICharacter.isDead.Value)
+            {
+                aICharacter.isDead.Value = false;
+                aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Empty", false, false, true, true);
+            }
+        }
+    }
 
 }

@@ -15,6 +15,9 @@ public class WorldAIManager : MonoBehaviour
 
     [Header("Bosses")]
     [SerializeField] List<AIBossCharacterManager> spawnedInBosses;
+    private Coroutine spawnAllCharactersCoroutine;
+    private Coroutine despawnAllCharactersCoroutine;
+    private Coroutine resetAllCharactersCoroutine;
 
     private void Awake()
     {
@@ -60,22 +63,60 @@ public class WorldAIManager : MonoBehaviour
         return spawnedInBosses.FirstOrDefault(boss => boss.bossID == ID);
     }
 
+    public void SpawnAllCharacters()
+    {   
+        if(spawnAllCharactersCoroutine != null)
+            StopCoroutine(spawnAllCharactersCoroutine);
+        spawnAllCharactersCoroutine = StartCoroutine(SpawnAllCharactersCoroutine());
+
+    }
+
+    private IEnumerator SpawnAllCharactersCoroutine()
+    {
+        for(int i = 0; i < aiCharacterSpawners.Count; i++)
+        {
+            yield return new WaitForFixedUpdate();
+            aiCharacterSpawners[i].AttemptToSpawnCharacter();
+            yield return null;
+        }
+        yield return null;
+    }
+
     public void ResetAllCharacters()
     {
-        DespawnAllCharacters();
+        if (resetAllCharactersCoroutine != null)
+            StopCoroutine(resetAllCharactersCoroutine);
+        resetAllCharactersCoroutine = StartCoroutine(ResetAllCharactersCoroutine());
+    }
 
-        foreach (var spawner in aiCharacterSpawners)
+    private IEnumerator ResetAllCharactersCoroutine()
+    {
+        for (int i = 0; i < spawnedInCharacters.Count; i++)
         {
-            spawner.AttemptToSpawnCharacter();
+            yield return new WaitForFixedUpdate();
+            aiCharacterSpawners[i].ResetCharacter();
+            yield return null;
         }
+        yield return null;
     }
 
     private void DespawnAllCharacters()
     {
-        foreach (var character in spawnedInCharacters)
+        if (despawnAllCharactersCoroutine != null)
+            StopCoroutine(despawnAllCharactersCoroutine);
+        despawnAllCharactersCoroutine = StartCoroutine(DespawnAllCharactersCoroutine());
+    }
+
+    public IEnumerator DespawnAllCharactersCoroutine()
+    {
+        for (int i = 0; i < spawnedInCharacters.Count; i++)
         {
-            character.GetComponent<NetworkObject>().Despawn();
+            yield return new WaitForFixedUpdate();
+            spawnedInCharacters[i].GetComponent<NetworkObject>().Despawn();
+            yield return null;
         }
+        spawnedInCharacters.Clear();
+        yield return null;
     }
 
     private void DisableAllCharacters()
