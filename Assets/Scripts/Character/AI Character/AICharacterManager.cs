@@ -10,7 +10,7 @@ public class AICharacterManager : CharacterManager
     [HideInInspector] public AICharacterNetworkManager aiCharacterNetworkManager;
     [HideInInspector] public AICharacterCombatManager aiCharacterCombatManager;
     [HideInInspector] public AICharacterLocomotionManager aiCharacterLocomotionManager;
-
+    public DDA_Difficulty_Manager dda;
     [Header("Navmesh Agent")]
     public NavMeshAgent navMeshAgent;
 
@@ -22,6 +22,8 @@ public class AICharacterManager : CharacterManager
     public PursueTargetState pursueTarget;
     public CombatStanceState combatStance;
     public AttackState attack;
+
+    public bool isEnemyDead = false;
 
     protected override void Awake()
     {
@@ -134,7 +136,11 @@ public class AICharacterManager : CharacterManager
     {
         characterNetworkManager.currentHealth.Value = 0;
         isDead.Value = true;
-        DDA_Game_Manager.instance.AddToKillCount();
+        
+        //DDA_Game_Manager.instance.AddToKillCount();
+        AddToKillCount();
+        //dda.UpdateScore();
+        DDA_Difficulty_Manager.instance.UpdateScore();
         //  RESET ANY FLAGS HERE THAT NEED TO BE RESET
         //  NOTHING YET
 

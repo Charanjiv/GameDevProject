@@ -187,5 +187,13 @@ public class CharacterManager : NetworkBehaviour
     //    killCount += 1;
     //    Debug.Log("1 Enemy Killed");
     //}
+    public void AddToKillCount()
+    {
+
+        killCount += (1.0f / 4f);
+
+
+        //Debug.Log("Kill count: " + killCount);
+    }
 }
 

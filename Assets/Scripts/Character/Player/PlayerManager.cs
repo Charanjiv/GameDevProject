@@ -14,7 +14,9 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
     [HideInInspector] public PlayerInteractionManager playerInteractionManager;
-    
+
+
+
 
     [Header("DEBUG MENU")]
     [SerializeField] bool respawnCharacter = false;
@@ -22,6 +24,18 @@ public class PlayerManager : CharacterManager
     private float deathCount;
     private float pKills;
     [SerializeField] private float totalEnemies;
+    [HideInInspector] public float overallPerformance;
+
+    //DDA
+    //public float killCount;
+    public float playerDeaths;
+
+    public float baseDifficulty = 1.0f;
+    public float difficultyIncreaseAmount = 0.2f;
+    public float difficultyDecreaseAmount = 0.2f;
+
+    public float highThreshold = 0.8f;
+    public float lowThreshold = 0.2f;
 
 
     protected override void Awake()
@@ -40,6 +54,8 @@ public class PlayerManager : CharacterManager
         playerInteractionManager = GetComponent<PlayerInteractionManager>();
         deathCount = 0;
         pKills = 0;
+        killCount = 0;
+        playerDeaths = 0;
     }
 
     protected override void Update()
@@ -58,11 +74,13 @@ public class PlayerManager : CharacterManager
 
         DebugMenu();
         HealthPerformance(pHealth);
-        KillPerformance(pKills);
-        LifePerformance(deathCount);
+        //KillPerformance(pKills);
+        //LifePerformance(deathCount);
+        OverallPerformance();
         Debug.Log("Health Performance:" + HealthPerformance(pHealth));
         Debug.Log("Kill Performance:" + KillPerformance(pKills));
-        Debug.Log("Life Performance:" + KillPerformance(deathCount));
+        //Debug.Log("Life Performance:" + KillPerformance(deathCount));
+        AdjustDifficultyBasedOnPerformance(overallPerformance);
     }
 
     protected override void LateUpdate()
@@ -295,18 +313,66 @@ public class PlayerManager : CharacterManager
 
     private float KillPerformance(float enemyKillsPerformance)
     {
-        enemyKillsPerformance = DDA_Game_Manager.instance.killCount / totalEnemies;
+        if (killCount <= 1)
+        {
+            enemyKillsPerformance = DDA_Difficulty_Manager.instance.score / totalEnemies;
+        }
         return enemyKillsPerformance;
-}
+    }
 
     private float LifePerformance(float lifePerformance)
     {
-        lifePerformance = 1 / DDA_Game_Manager.instance.playerDeaths;
+        lifePerformance = 1 / playerDeaths;
         return lifePerformance;
     }
 
     private void OverallPerformance()
     {
+        float w1 = 0.4f;
+        float w2 = 0.4f;
+        float w3 = 0.2f;
+        overallPerformance = (HealthPerformance(pHealth) * w1) + (KillPerformance(pKills) * w2) + (LifePerformance(deathCount) * w3);
 
     }
+
+    public void AdjustDifficultyBasedOnPerformance(float performance)
+    {
+        //If performance is above the high threshold, increase difficulty
+        if (performance > highThreshold)
+        {
+            baseDifficulty += difficultyIncreaseAmount;
+            Debug.Log("Increasing difficulty. New Difficulty: " + baseDifficulty);
+        }
+        else if (performance < lowThreshold)
+        {
+            baseDifficulty -= difficultyDecreaseAmount;
+            Debug.Log("Decreasing difficulty. New Difficulty: " + baseDifficulty);
+        }
+        else
+        {
+            Debug.Log("Difficulty is normal");
+        }
+
+        baseDifficulty = Mathf.Clamp(baseDifficulty, 0.5f, 2.0f);
+    }
+
+    //public void AddToKillCount()
+    //{
+
+    //    killCount += (1.0f / 4f);
+
+
+    //    Debug.Log("Kill count: " + killCount);
+    //}
+
+    public void AddToPlayerDeathCount()
+    {
+
+        playerDeaths += (1.0f / 4f);
+
+
+        Debug.Log("Kill count: " + playerDeaths);
+    }
+
+    
 }

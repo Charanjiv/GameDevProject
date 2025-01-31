@@ -62,7 +62,7 @@ public class PlayerUIHudManager : MonoBehaviour
 
         if (weapon == null)
         {
-            Debug.Log("ITEM IS NULL");
+            //Debug.Log("ITEM IS NULL");
             rightWeaponQuickSlotIcon.enabled = false;
             rightWeaponQuickSlotIcon.sprite = null;
             return;
@@ -70,7 +70,7 @@ public class PlayerUIHudManager : MonoBehaviour
 
         if (weapon.itemIcon == null)
         {
-            Debug.Log("ITEM HAS NO ICON");
+            //Debug.Log("ITEM HAS NO ICON");
             rightWeaponQuickSlotIcon.enabled = false;
             rightWeaponQuickSlotIcon.sprite = null;
             return;

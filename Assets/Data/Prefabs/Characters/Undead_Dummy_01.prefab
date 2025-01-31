@@ -2491,7 +2491,7 @@ GameObject:
   - component: {fileID: 6121673010140579101}
   m_Layer: 6
   m_Name: Undead_Dummy_01
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2644,12 +2644,14 @@ MonoBehaviour:
   aiCharacterNetworkManager: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
+  dda: {fileID: 0}
   navMeshAgent: {fileID: 8103933478137904221}
   currentState: {fileID: 11400000, guid: 798e042e9498295489bbc70d0bc42822, type: 2}
   idle: {fileID: 11400000, guid: 798e042e9498295489bbc70d0bc42822, type: 2}
   pursueTarget: {fileID: 11400000, guid: 73bbddfe126aedb4291d3abe8b494c5e, type: 2}
   combatStance: {fileID: 11400000, guid: e8e32436031ae9f4bb8773441b5f0159, type: 2}
   attack: {fileID: 11400000, guid: 470958b3da16cd547a96d4c444f09935, type: 2}
+  isEnemyDead: 0
 --- !u!114 &5338164603453355271
 MonoBehaviour:
   m_ObjectHideFlags: 0

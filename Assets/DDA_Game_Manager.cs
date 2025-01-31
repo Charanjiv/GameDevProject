@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class DDA_Game_Manager : NetworkBehaviour
+public class DDA_Game_Manager : MonoBehaviour
 {
     public static DDA_Game_Manager instance;
     public PlayerManager player;
@@ -14,6 +14,34 @@ public class DDA_Game_Manager : NetworkBehaviour
     public float killCount;
     public float playerDeaths;
 
+    public float baseDifficulty = 1.0f;
+    public float difficultyIncreaseAmount = 0.2f;
+    public float difficultyDecreaseAmount = 0.2f;
+
+    public float highThreshold = 0.8f;
+    public float lowThreshold = 0.2f;
+
+
+    public void AdjustDifficultyBasedOnPerformance(float performance)
+    {
+        //If performance is above the high threshold, increase difficulty
+        if (performance > highThreshold)
+        {
+            baseDifficulty += difficultyIncreaseAmount;
+            Debug.Log("Increasing difficulty. New Difficulty: " + baseDifficulty);
+        }
+        else if (performance < lowThreshold)
+        {
+            baseDifficulty -= difficultyDecreaseAmount;
+            Debug.Log("Decreasing difficulty. New Difficulty: " + baseDifficulty);
+        }
+        else
+        {
+            Debug.Log("Difficulty is normal");
+        }
+
+        baseDifficulty = Mathf.Clamp(baseDifficulty, 0.5f, 2.0f);
+    }
     private void Awake()
     {
         if (instance == null)
@@ -53,7 +81,7 @@ public class DDA_Game_Manager : NetworkBehaviour
 
     void Update()
     {
-
+        AdjustDifficultyBasedOnPerformance(player.overallPerformance);
     }
 
     private void AdjustGameParameters()
