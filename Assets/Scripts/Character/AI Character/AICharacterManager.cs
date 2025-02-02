@@ -137,9 +137,7 @@ public class AICharacterManager : CharacterManager
         characterNetworkManager.currentHealth.Value = 0;
         isDead.Value = true;
         
-        //DDA_Game_Manager.instance.AddToKillCount();
-        AddToKillCount();
-        //dda.UpdateScore();
+
         DDA_Difficulty_Manager.instance.UpdateScore();
         //  RESET ANY FLAGS HERE THAT NEED TO BE RESET
         //  NOTHING YET
@@ -150,7 +148,6 @@ public class AICharacterManager : CharacterManager
         {
             characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
         }
-        //KillCount();
         
         yield return new WaitForSeconds(5);
     }

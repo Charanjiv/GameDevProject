@@ -86,6 +86,9 @@ public class SiteOfGraceInteractable : Interactable
         interactableCollider.enabled = true; // TEMPORARILY RE-ENABLING THE COLLIDER HERE UNTIL WE ADD THE MENU SO YOU CAN RESPAWN MONSTERS INDEFINITELY
         player.playerNetworkManager.currentHealth.Value = player.playerNetworkManager.maxHealth.Value;
         player.playerNetworkManager.currentStamina.Value = player.playerNetworkManager.maxStamina.Value;
+        player.pKills = 0;
+        player.killCount = 0;
+        player.playerDeaths = 0;
 
 
         //  REFILL FLASKS (TO DO)

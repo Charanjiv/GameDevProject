@@ -1066,8 +1066,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf00ff1d2114254b880125cc10b9538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerManager: {fileID: 0}
+  playerManager: {fileID: -4162491839297260333, guid: 7755ac2ea149dc24dbd4e2bf131cb1ca, type: 3}
+  aiCharacterManager: []
+  allEnemies: []
   score: 0
+  enemyStartHealth: 500
 --- !u!4 &360637404
 Transform:
   m_ObjectHideFlags: 0

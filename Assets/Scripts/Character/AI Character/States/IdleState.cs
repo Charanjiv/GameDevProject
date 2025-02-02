@@ -14,7 +14,7 @@ public class IdleState : AIState
         {
             //  RETURN THIS STATE, TO CONTINUALLY SEARCH FOR A TARGET (KEEP THE STATE HERE, UNTIL A TARGET IS FOUND)
             aiCharacter.aiCharacterCombatManager.FindATargetViaLineOfSight(aiCharacter);
-            Debug.Log("SEARCHING FOR A TARGET");
+            //Debug.Log("SEARCHING FOR A TARGET");
             return this;
         }
     }
