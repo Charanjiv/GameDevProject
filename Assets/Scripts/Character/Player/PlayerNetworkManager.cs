@@ -22,6 +22,8 @@ public class PlayerNetworkManager : CharacterNetworkManager
         player = GetComponent<PlayerManager>();
     }
 
+
+
     public void SetCharacterActionHand(bool rightHandedAction)
     {
         if (rightHandedAction)
@@ -112,4 +114,6 @@ public class PlayerNetworkManager : CharacterNetworkManager
             Debug.LogError("ACTION IS NULL, CANNOT BE PERFORMED");
         }
     }
+
+
 }

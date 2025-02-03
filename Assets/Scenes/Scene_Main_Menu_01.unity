@@ -1069,8 +1069,10 @@ MonoBehaviour:
   playerManager: {fileID: -4162491839297260333, guid: 7755ac2ea149dc24dbd4e2bf131cb1ca, type: 3}
   aiCharacterManager: []
   allEnemies: []
+  undeadCombatManager: []
   score: 0
   enemyStartHealth: 500
+  navMeshAgent: []
 --- !u!4 &360637404
 Transform:
   m_ObjectHideFlags: 0
@@ -2981,6 +2983,51 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3734130876372027913, guid: 5c56ebd5cc0018f438b3fa66c1499ef6, type: 3}
   m_PrefabInstance: {fileID: 1284237407}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1300510434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1300510436}
+  - component: {fileID: 1300510435}
+  m_Layer: 0
+  m_Name: RespawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1300510435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300510434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d997cb2dc75c8d4aa2bb6030b814b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lastCheckpoint: {fileID: 0}
+--- !u!4 &1300510436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300510434}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -31.294313, y: -23.715265, z: 29.04943}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1321302179
 GameObject:
   m_ObjectHideFlags: 0
@@ -6472,3 +6519,4 @@ SceneRoots:
   - {fileID: 1873599052}
   - {fileID: 6189177569490301712}
   - {fileID: 360637404}
+  - {fileID: 1300510436}

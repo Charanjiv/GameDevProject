@@ -75,6 +75,9 @@ public class SiteOfGraceInteractable : Interactable
 
         PlayerUIManager.instance.playerUIPopUpManager.SendGraceRestoredPopUp("SITE OF GRACE RESTORED");
 
+            //RespawnManager respawnManager = FindObjectOfType<RespawnManager>();
+            RespawnManager.instance.SetCheckpoint(gameObject); // Store the full GameObject
+        
         StartCoroutine(WaitForAnimationAndPopUpThenRestoreCollider());
     }
 
