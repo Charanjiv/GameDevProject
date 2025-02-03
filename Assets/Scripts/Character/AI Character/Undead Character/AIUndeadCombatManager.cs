@@ -8,7 +8,7 @@ public class AIUndeadCombatManager : AICharacterCombatManager
     [SerializeField] UndeadHandDamageCollider leftHandDamageCollider;
 
     [Header("Damage")]
-    [SerializeField] int baseDamage = 25;
+    public int baseDamage = 40;
     [SerializeField] float attack01DamageModifier = 1.0f;
     [SerializeField] float attack02DamageModifier = 1.4f;
 

@@ -1076,6 +1076,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4c7801f5b384d944b9f35835e7acc844, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1176686548608896205, guid: 4c7801f5b384d944b9f35835e7acc844, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1401,8 +1405,15 @@ MonoBehaviour:
   playerCombatManager: {fileID: 0}
   playerInteractionManager: {fileID: 0}
   respawnCharacter: 0
+  pHealth: 0
+  deathCount: 0
+  pKills: 0
   totalEnemies: 7
   overallPerformance: 0
+  playerDeaths: 0
+  baseDifficulty: 1
+  highThreshold: 0.8
+  lowThreshold: 0.5
 --- !u!114 &5419566535029447189
 MonoBehaviour:
   m_ObjectHideFlags: 0

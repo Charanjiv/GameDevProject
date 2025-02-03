@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DDA_Difficulty_Manager : MonoBehaviour
 {
@@ -9,10 +10,13 @@ public class DDA_Difficulty_Manager : MonoBehaviour
     [SerializeField] public PlayerManager playerManager;
     public AICharacterManager[]  aiCharacterManager;
     public GameObject[] allEnemies;
+    public AIUndeadCombatManager[] undeadCombatManager;
     public float score;
     public int enemyStartHealth = 500;
     private bool increaseDifficulty;
     private bool decreaseDifficulty;
+    private bool normalDifficulty;
+    public NavMeshAgent[] navMeshAgent;
 
 
     private void Awake()
@@ -44,17 +48,34 @@ public class DDA_Difficulty_Manager : MonoBehaviour
     {
 
         allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        //navMeshAgent = NavMeshAgent navAgent = GetComponentInChildren<NavMeshAgent>();
+
+        List<AICharacterManager> managerTempList = new List<AICharacterManager>();
+        List<AIUndeadCombatManager> combatTempList = new List<AIUndeadCombatManager>();
+        List<NavMeshAgent> navTempList = new List<NavMeshAgent>();
         
-        List<AICharacterManager> tempList = new List<AICharacterManager>();
         foreach (GameObject enemy in allEnemies)
         {
             AICharacterManager manager = enemy.GetComponent<AICharacterManager>();
-            if(manager != null)
+            AIUndeadCombatManager combat = enemy.GetComponent<AIUndeadCombatManager>();
+            NavMeshAgent navAgentMesh = enemy.GetComponentInChildren<NavMeshAgent>();
+            if (manager != null)
             {
-                tempList.Add(manager);
+                managerTempList.Add(manager);
             }
-            aiCharacterManager = tempList.ToArray();
+            if(combat != null)
+            {
+                combatTempList.Add(combat);
+            }
+            if(navAgentMesh != null)
+            {
+                navTempList.Add(navAgentMesh);
+            }
+            aiCharacterManager = managerTempList.ToArray();
+            undeadCombatManager = combatTempList.ToArray();
+            navMeshAgent = navTempList.ToArray();
         }
+        //INCREASED DIFFICULTY
         if (increaseDifficulty && enemyStartHealth == 500)
         {
             
@@ -67,26 +88,38 @@ public class DDA_Difficulty_Manager : MonoBehaviour
                     enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
                     manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
                     enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    Debug.Log("Health changed should work");
+                    
+                    Debug.Log("Health increased");
 
-                    if (enemyStartHealth != manager.aiCharacterNetworkManager.maxHealth.Value)
-                    {
+                    //if (enemyStartHealth != manager.aiCharacterNetworkManager.maxHealth.Value)
+                    //{
                         
                         
-                            enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                            manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
-                            enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                            Debug.Log("Health changed should work");
+                    //        enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    //        manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    //        enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    //        Debug.Log("Health changed should work");
                         
 
-                    }
+                    //}
                     
 
+                }
+                foreach(AIUndeadCombatManager combat in undeadCombatManager)
+                {
+                    combat.baseDamage = 60;
+                }
+
+                foreach (NavMeshAgent navAgentMesh in navMeshAgent)
+                {
+                    navAgentMesh.speed = 100;
+                    navAgentMesh.acceleration = 100;
                 }
             }
             increaseDifficulty = false;
         }
 
+        //LOWERED DIFFICULTY
         if (decreaseDifficulty && enemyStartHealth == 500)
         {
 
@@ -99,24 +132,65 @@ public class DDA_Difficulty_Manager : MonoBehaviour
                     enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
                     manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
                     enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    Debug.Log("Health changed should work");
+                    Debug.Log("Health decreased");
 
-                    if (enemyStartHealth != manager.aiCharacterNetworkManager.maxHealth.Value)
-                    {
-
-
-                        enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                        manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
-                        enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                        Debug.Log("Health changed should work");
+                    //if (enemyStartHealth != manager.aiCharacterNetworkManager.maxHealth.Value)
+                    //{
 
 
-                    }
+                    //    enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    //    manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    //    enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    //    Debug.Log("Health changed should work");
+
+
+                    //}
 
 
                 }
+                foreach (AIUndeadCombatManager combat in undeadCombatManager)
+                {
+                    combat.baseDamage = 20;
+                }
             }
             decreaseDifficulty = false;
+        }
+
+        //NORMAL
+        if (normalDifficulty && enemyStartHealth != 500)
+        {
+
+            foreach (GameObject enemy in allEnemies)
+            {
+
+                foreach (AICharacterManager manager in aiCharacterManager)
+                {
+                    manager.aiCharacterNetworkManager.maxHealth.Value = 500;
+                    enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    
+
+                    //if (enemyStartHealth != manager.aiCharacterNetworkManager.maxHealth.Value)
+                    //{
+
+
+                    //    enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    //    manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    //    enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
+                    //    Debug.Log("Health should be normal");
+
+
+                    //}
+
+
+                }
+                foreach (AIUndeadCombatManager combat in undeadCombatManager)
+                {
+                    combat.baseDamage = 40;
+                }
+            }
+            normalDifficulty = false;
         }
 
 
@@ -158,5 +232,10 @@ public class DDA_Difficulty_Manager : MonoBehaviour
     {
         decreaseDifficulty = true;
         Debug.Log("Difficulty gone down");
+    }
+    public void NormalDifficulty()
+    {
+        normalDifficulty = true;
+        
     }
 }

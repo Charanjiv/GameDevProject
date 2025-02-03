@@ -1,13 +1,14 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerUIPopUpManager : MonoBehaviour
 {
     [Header("Message Pop Up")]
     [SerializeField] TextMeshProUGUI popUpMessageText;
     [SerializeField] GameObject popUpMessageGameObject;
-
+    public PlayerManager playerManager;
     [Header("YOU DIED Pop Up")]
     [SerializeField] GameObject youDiedPopUpGameObject;
     [SerializeField] TextMeshProUGUI youDiedPopUpBackgroundText;
@@ -26,6 +27,30 @@ public class PlayerUIPopUpManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI graceRestoredPopUpText;
     [SerializeField] CanvasGroup graceRestoredPopUpCanvasGroup;   //  Allows us to set the alpha to fade over time
 
+    [Header("Player Performance Pop Up")]
+    [SerializeField] GameObject playerPerformancePopUpGameObject;
+    [SerializeField] TextMeshProUGUI healthPerformanceText;
+    [SerializeField] TextMeshProUGUI killPerformanceText;
+    [SerializeField] TextMeshProUGUI LifePerformanceText;
+    [SerializeField] TextMeshProUGUI OverallPerformanceText;
+    [SerializeField] CanvasGroup playerPerformancePopUpCanvasGroup;
+
+    //private GameObject playerGameObject;
+    public void Update()
+    {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (SceneManager.GetActiveScene().name == "Scene_World_01")
+        {
+            if(playerObject != null)
+            {
+                PlayerManager player = playerObject.GetComponent<PlayerManager>();
+                playerManager = player;
+            }
+            // Do something only when this scene is active
+            //DisplayPerformance();
+        }
+
+    }
     public void CloseAllPopUpWindows()
     {
         popUpMessageGameObject.SetActive(false);
@@ -138,5 +163,25 @@ public class PlayerUIPopUpManager : MonoBehaviour
         canvas.alpha = 0;
 
         yield return null;
+    }
+
+    float RoundToDecimals(float value, int decimalPlaces)
+    {
+        float factor = Mathf.Pow(10, decimalPlaces);
+        return Mathf.Round(value * factor) / factor;
+    }
+
+    public void DisplayPerformance()
+    {
+        playerPerformancePopUpGameObject.SetActive(true);
+        StartCoroutine(FadeInPopUpOverTime(graceRestoredPopUpCanvasGroup, 5));
+        healthPerformanceText.SetText("Health Performance: " + RoundToDecimals(playerManager.HealthPerformance(playerManager.pHealth),2).ToString());
+        killPerformanceText.SetText("Kill Performance: " + RoundToDecimals(playerManager.KillPerformance(playerManager.pKills), 2).ToString());
+        LifePerformanceText.SetText("Life Performance: " + RoundToDecimals(playerManager.LifePerformance(playerManager.playerDeaths), 2).ToString());
+        OverallPerformanceText.SetText("Overall Performance: " + RoundToDecimals(playerManager.overallPerformance, 2).ToString());
+
+
+
+
     }
 }

@@ -460,8 +460,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 17
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 25
+  m_Center: {x: -15, y: 0, z: 0}
 --- !u!1 &478866520507930858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,8 +1495,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 17
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 25
+  m_Center: {x: 15, y: 0, z: 0}
 --- !u!1 &4911172860811906604
 GameObject:
   m_ObjectHideFlags: 0
@@ -2505,7 +2505,7 @@ Transform:
   m_GameObject: {fileID: 8533729570112392486}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.12, y: 0, z: 24.36}
+  m_LocalPosition: {x: 5.68, y: 0, z: 22.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2962,7 +2962,7 @@ MonoBehaviour:
   attackRotationSpeed: 50
   rightHandDamageCollider: {fileID: 3467953282494658105}
   leftHandDamageCollider: {fileID: 8466957512783880395}
-  baseDamage: 50
+  baseDamage: 40
   attack01DamageModifier: 1
   attack02DamageModifier: 1.4
 --- !u!114 &6121673010140579101

@@ -121,7 +121,7 @@ public class AIBossCharacterManager : AICharacterManager
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
         PlayerUIManager.instance.playerUIPopUpManager.SendBossDefeatedPopUp("GREAT ENEMY SLAIN");
-
+        PlayerUIManager.instance.playerUIPopUpManager.DisplayPerformance();
         if (IsOwner)
         {
             characterNetworkManager.currentHealth.Value = 0;

@@ -31,8 +31,8 @@ public class PlayerManager : CharacterManager
     public float playerDeaths;
 
     public float baseDifficulty = 1.0f;
-    public float difficultyIncreaseAmount = 0.2f;
-    public float difficultyDecreaseAmount = 0.2f;
+    //public float difficultyIncreaseAmount = 0.2f;
+    //public float difficultyDecreaseAmount = 0.2f;
 
     public float highThreshold = 0.8f;
     public float lowThreshold = 0.5f;
@@ -222,6 +222,7 @@ public class PlayerManager : CharacterManager
         }
         respawnCharacter = true;
         playerDeaths++;
+        gameObject.transform.position = Vector3.zero;
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
         //  CHECK FOR PLAYERS THAT ARE ALIVE, IF 0 RESPAWN CHARACTERS
     }
@@ -304,7 +305,7 @@ public class PlayerManager : CharacterManager
 
 
 
-    private float HealthPerformance(float health)
+    public float HealthPerformance(float health)
     {
         float currentHealth = playerNetworkManager.currentHealth.Value;
         float maxHealth = playerNetworkManager.maxHealth.Value;
@@ -317,7 +318,7 @@ public class PlayerManager : CharacterManager
 
     }
 
-    private float KillPerformance(float enemyKillsPerformance)
+    public float KillPerformance(float enemyKillsPerformance)
     {
         if (killCount <= 1)
         {
@@ -326,13 +327,13 @@ public class PlayerManager : CharacterManager
         return enemyKillsPerformance;
     }
 
-    private float LifePerformance(float lifePerformance)
+    public float LifePerformance(float lifePerformance)
     {
         lifePerformance = 1 / ((playerDeaths/4) + 1);
         return lifePerformance;
     }
 
-    private void OverallPerformance()
+    public void OverallPerformance()
     {
         float w1 = 0.5f;
         float w2 = 0.4f;
@@ -357,12 +358,13 @@ public class PlayerManager : CharacterManager
             Debug.Log("Decreasing difficulty");
             DDA_Difficulty_Manager.instance.DecreaseDifficulty();
         }
-        else
+        if(performance > lowThreshold &&  performance < highThreshold)
         {
             Debug.Log("Difficulty is normal");
+            DDA_Difficulty_Manager.instance.NormalDifficulty();
         }
 
-        baseDifficulty = Mathf.Clamp(baseDifficulty, 0.3f, 2.0f);
+        //baseDifficulty = Mathf.Clamp(baseDifficulty, 0.3f, 2.0f);
     }
 
     //public void AddToKillCount()
