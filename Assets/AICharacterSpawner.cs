@@ -9,7 +9,8 @@ public class AICharacterSpawner : MonoBehaviour
     [SerializeField] GameObject characterGameObject;
     [SerializeField] GameObject instantiatedGameObject;
     private AICharacterManager aICharacter;
-    private Transform startTransform;
+    public Transform startTransform;
+    public Vector3 startPosition;
     private void Awake()
     {
 
@@ -17,6 +18,8 @@ public class AICharacterSpawner : MonoBehaviour
 
     private void Start()
     {
+        startPosition = transform.position;
+        Debug.Log("startPosition" +  startPosition);
         characterGameObject.transform.position = transform.position;
         WorldAIManager.instance.SpawnCharacter(this);
         gameObject.SetActive(false);
@@ -24,13 +27,14 @@ public class AICharacterSpawner : MonoBehaviour
 
     public void AttemptToSpawnCharacter()
     {
-        
+
         if (characterGameObject != null)
         {
             instantiatedGameObject = Instantiate(characterGameObject);
-            instantiatedGameObject.transform.position = transform.position;
+            instantiatedGameObject.transform.position = startPosition;
             instantiatedGameObject.transform.rotation = transform.rotation;
             instantiatedGameObject.GetComponent<NetworkObject>().Spawn();
+            startPosition = instantiatedGameObject.transform.position;
             aICharacter = instantiatedGameObject.GetComponent<AICharacterManager>();
             if (aICharacter != null)
             {
@@ -39,22 +43,27 @@ public class AICharacterSpawner : MonoBehaviour
 
 
         }
-        
+
     }
 
     public void ResetCharacter()
     {
         if (instantiatedGameObject != null)
         {
-            instantiatedGameObject.transform.position = transform.position;
-            instantiatedGameObject.transform.rotation = transform.rotation;
-            aICharacter.aiCharacterNetworkManager.currentHealth.Value = aICharacter.aiCharacterNetworkManager.maxHealth.Value;
-            if (aICharacter.isDead.Value)
-            {
-                aICharacter.isDead.Value = false;
-                aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Empty", false, false, true, true);
-            }
+            
+                gameObject.SetActive(true);
+                Debug.Log("Iscalled");
+                instantiatedGameObject.transform.position = gameObject.transform.position;
+                instantiatedGameObject.transform.rotation = transform.rotation;
+                aICharacter.aiCharacterNetworkManager.currentHealth.Value = aICharacter.aiCharacterNetworkManager.maxHealth.Value;
+                if (aICharacter.isDead.Value)
+                {
+                    aICharacter.isDead.Value = false;
+                    aICharacter.characterAnimatorManager.PlayTargetActionAnimation("Empty", false, false, true, true);
+                }
+                gameObject.SetActive(false);
+            
         }
-    }
 
+    }
 }

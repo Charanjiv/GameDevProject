@@ -84,19 +84,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0d28fc046cde77b41b03f2b781b03682, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.000000014901159
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0d28fc046cde77b41b03f2b781b03682, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0d28fc046cde77b41b03f2b781b03682, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0d28fc046cde77b41b03f2b781b03682, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0d28fc046cde77b41b03f2b781b03682, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -786,12 +786,14 @@ MonoBehaviour:
   aiCharacterNetworkManager: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
+  dda: {fileID: 0}
   navMeshAgent: {fileID: 5243368920932137037}
   currentState: {fileID: 11400000, guid: 798e042e9498295489bbc70d0bc42822, type: 2}
   idle: {fileID: 11400000, guid: 35aa6d4e9764a9b4baf4ffcdc8fa48eb, type: 2}
   pursueTarget: {fileID: 11400000, guid: ee019599291986948bc129860c00a684, type: 2}
   combatStance: {fileID: 11400000, guid: 428e26bbdab35e548bff5be58e5cd25b, type: 2}
   attack: {fileID: 11400000, guid: 00d4f120e554c4c4aabb8f70f7b0aa72, type: 2}
+  isEnemyDead: 0
   bossID: 0
   bossIntroClip: {fileID: 8300000, guid: 275a420e6132e6e4c81bf73a19654dc6, type: 3}
   bossBattleLoopClip: {fileID: 8300000, guid: aaf5f01cb6ba42141bf00bb46f72a68a, type: 3}

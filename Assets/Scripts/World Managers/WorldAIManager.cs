@@ -77,6 +77,7 @@ public class WorldAIManager : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
             aiCharacterSpawners[i].AttemptToSpawnCharacter();
+            
             yield return null;
         }
         yield return null;
@@ -100,7 +101,7 @@ public class WorldAIManager : MonoBehaviour
         yield return null;
     }
 
-    private void DespawnAllCharacters()
+    public void DespawnAllCharacters()
     {
         if (despawnAllCharactersCoroutine != null)
             StopCoroutine(despawnAllCharactersCoroutine);

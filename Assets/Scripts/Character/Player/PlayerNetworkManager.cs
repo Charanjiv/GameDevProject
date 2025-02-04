@@ -1,11 +1,12 @@
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class PlayerNetworkManager : CharacterNetworkManager
 {
     PlayerManager player;
-
+    public GameObject checkpoint;
     public NetworkVariable<FixedString64Bytes> characterName = new NetworkVariable<FixedString64Bytes>("Character", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [Header("Equipment")]
@@ -21,7 +22,26 @@ public class PlayerNetworkManager : CharacterNetworkManager
 
         player = GetComponent<PlayerManager>();
     }
+    private void Update()
+    {
+        checkpoint = RespawnManager.instance.GetLastCheckpoint();
+    }
 
+    public override void CheckHP(int oldValue, int newValue)
+    {
+        base.CheckHP(oldValue, newValue);
+        if (currentHealth.Value <= 0)
+        {
+            currentHealth.Value = 0;
+            Debug.Log("Event is called");
+            checkpoint = RespawnManager.instance.GetLastCheckpoint();
+            gameObject.transform.position = (checkpoint.transform.position + new Vector3(0, 0, 2));
+            currentHealth.Value = maxHealth.Value;
+            currentStamina.Value = maxStamina.Value;
+            PlayerUIManager.instance.playerUIHudManager.RefreshHUD();
+        }
+
+    }
 
 
     public void SetCharacterActionHand(bool rightHandedAction)
@@ -43,6 +63,7 @@ public class PlayerNetworkManager : CharacterNetworkManager
         maxHealth.Value = player.playerStatsManager.CalculateHealthBasedOnVitalityLevel(newVitality);
         PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(maxHealth.Value);
         currentHealth.Value = maxHealth.Value;
+
     }
 
     public void SetNewMaxStaminaValue(int oldEndurance, int newEndurance)

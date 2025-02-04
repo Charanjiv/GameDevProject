@@ -73,7 +73,7 @@ public class PlayerManager : CharacterManager
         //  REGEN STAMINA
         playerStatsManager.RegenerateStamina();
 
-        DebugMenu();
+        //DebugMenu();
         HealthPerformance(pHealth);
         KillPerformance(pKills);
         LifePerformance(playerDeaths);
@@ -85,11 +85,11 @@ public class PlayerManager : CharacterManager
         Debug.Log("OverallPerformance is " + overallPerformance);
         AdjustDifficultyBasedOnPerformance(overallPerformance);
 
-        
-
-        
         //do roght here
-
+        if(respawnCharacter)
+        {
+            ReviveCharacter();
+        }
     }
 
     protected override void LateUpdate()
@@ -219,6 +219,7 @@ public class PlayerManager : CharacterManager
 
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
+        respawnCharacter = true;
         if (IsOwner)
         {
             PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
@@ -226,8 +227,8 @@ public class PlayerManager : CharacterManager
         }
         respawnCharacter = true;
         playerDeaths++;
-        ReviveCharacter();
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
+
         //  CHECK FOR PLAYERS THAT ARE ALIVE, IF 0 RESPAWN CHARACTERS
     }
 
@@ -235,25 +236,14 @@ public class PlayerManager : CharacterManager
     {
         base.ReviveCharacter();
 
+        PlayerUIManager.instance.playerUIHudManager.RefreshHUD();
         if (IsOwner)
         {
-            GameObject checkpoint = RespawnManager.instance.GetLastCheckpoint();
-            transform.position = (checkpoint.transform.position + new Vector3(0,0,2));
-            PlayerUIManager.instance.playerUIHudManager.RefreshHUD();
             isDead.Value = false;
-            playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
-            playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
-            //playerNetworkManager.transform.localPosition = new Vector3(0, 0, 0);
-            //  RESTORE FOCUS POINTS
 
-            //  PLAY REBIRTH EFFECTS
             playerAnimatorManager.PlayTargetActionAnimation("Empty", false);
-
-            
-                //Vector3 spawnPoint = checkpoint != null ? checkpoint.transform.position : Vector3.zero;
-                //playerNetworkManager.RespawnPlayerServerRpc(spawnPoint);// Use checkpoint position
-                //Debug.Log("Respawned at: " + checkpoint.name);
-            
+            respawnCharacter = false;
+            Debug.Log("Revive character");
         }
 
         

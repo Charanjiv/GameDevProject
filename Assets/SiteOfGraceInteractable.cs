@@ -96,6 +96,8 @@ public class SiteOfGraceInteractable : Interactable
 
         //  REFILL FLASKS (TO DO)
         //  UPDATE/FORCE MOVE QUEST CHARACTERS (TO DO)
+        //WorldAIManager.instance.DespawnAllCharacters();
+        //WorldAIManager.instance.SpawnAllCharacters();
         WorldAIManager.instance.ResetAllCharacters();
     }
 
