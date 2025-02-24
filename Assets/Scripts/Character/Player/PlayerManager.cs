@@ -317,10 +317,6 @@ public class PlayerManager : CharacterManager
         return health;
     }
 
-    private void AccuracyPerformance()
-    {
-
-    }
 
     public float KillPerformance(float enemyKillsPerformance)
     {
@@ -371,23 +367,7 @@ public class PlayerManager : CharacterManager
         //baseDifficulty = Mathf.Clamp(baseDifficulty, 0.3f, 2.0f);
     }
 
-    //public void AddToKillCount()
-    //{
 
-    //    killCount += (1.0f / 4f);
-
-
-    //    Debug.Log("Kill count: " + killCount);
-    //}
-
-    //public void AddToPlayerDeathCount()
-    //{
-
-    //    playerDeaths += (1.0f / 4f);
-
-
-    //    Debug.Log("Kill count: " + playerDeaths);
-    //}
 
     
 }

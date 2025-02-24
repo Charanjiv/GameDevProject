@@ -142,8 +142,6 @@ public class AICharacterManager : CharacterManager
         //  RESET ANY FLAGS HERE THAT NEED TO BE RESET
         //  NOTHING YET
 
-        //  IF WE ARE NOT GROUNDED, PLAY AN AERIAL DEATH ANIMATION
-
         if (!manuallySelectDeathAnimation)
         {
             characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);

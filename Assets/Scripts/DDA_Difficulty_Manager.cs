@@ -35,14 +35,6 @@ public class DDA_Difficulty_Manager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        //foreach (var enemy in allEnemies)
-        //{
-        //    aiCharacterManager = GetComponent<AICharacterManager>();
-        //}
-        
-
-
-
     }
     public void Update()
     {
@@ -91,17 +83,6 @@ public class DDA_Difficulty_Manager : MonoBehaviour
                     
                     Debug.Log("Health increased");
 
-                    //if (enemyStartHealth != manager.aiCharacterNetworkManager.maxHealth.Value)
-                    //{
-                        
-                        
-                    //        enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    //        manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    //        enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    //        Debug.Log("Health changed should work");
-                        
-
-                    //}
                     
 
                 }
@@ -119,6 +100,7 @@ public class DDA_Difficulty_Manager : MonoBehaviour
             increaseDifficulty = false;
         }
 
+
         //LOWERED DIFFICULTY
         if (decreaseDifficulty && enemyStartHealth == 500)
         {
@@ -133,18 +115,6 @@ public class DDA_Difficulty_Manager : MonoBehaviour
                     manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
                     enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
                     Debug.Log("Health decreased");
-
-                    //if (enemyStartHealth != manager.aiCharacterNetworkManager.maxHealth.Value)
-                    //{
-
-
-                    //    enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    //    manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    //    enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    //    Debug.Log("Health changed should work");
-
-
-                    //}
 
 
                 }
@@ -169,19 +139,7 @@ public class DDA_Difficulty_Manager : MonoBehaviour
                     enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
                     manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
                     enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    
-
-                    //if (enemyStartHealth != manager.aiCharacterNetworkManager.maxHealth.Value)
-                    //{
-
-
-                    //    enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    //    manager.aiCharacterNetworkManager.currentHealth.Value = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    //    enemyStartHealth = manager.aiCharacterNetworkManager.maxHealth.Value;
-                    //    Debug.Log("Health should be normal");
-
-
-                    //}
+                   
 
 
                 }
@@ -208,24 +166,7 @@ public class DDA_Difficulty_Manager : MonoBehaviour
     public void IncreaseDifficulty()
     {
         increaseDifficulty = true;
-        //foreach(GameObject enemy in allEnemies)
-        //{
 
-        //    //aiCharacterManager.aiCharacterNetworkManager.maxHealth.Value = 1000;
-        //    //aiCharacterManager = enemy.GetComponent<AICharacterManager>();
-        //    //aiCharacterManager.aiCharacterNetworkManager.currentHealth.Value = 1000;
-        //    //aiCharacterManager.aiCharacterNetworkManager.maxHealth.Value = 1000;
-        //    Debug.Log("Increase Health of enemies");
-
-        //}
-        //allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        //aiCharacterManager.aiCharacterNetworkManager.maxHealth.Value = 1000;
-        //aiCharacterManager.aiCharacterNetworkManager.currentHealth.Value = 1000;
-        //Debug.Log("Enemy health: " + aiCharacterManager.aiCharacterNetworkManager.maxHealth.Value);
-        //foreach(var enemy in allEnemies)
-        //{
-        //    GetComponent<AICharacterNetworkManager>();
-        //}
     }
 
     public void DecreaseDifficulty()

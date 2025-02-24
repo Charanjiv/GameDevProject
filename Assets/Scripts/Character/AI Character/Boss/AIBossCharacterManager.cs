@@ -136,8 +136,6 @@ public class AIBossCharacterManager : AICharacterManager
             //  RESET ANY FLAGS HERE THAT NEED TO BE RESET
             //  NOTHING YET
 
-            //  IF WE ARE NOT GROUNDED, PLAY AN AERIAL DEATH ANIMATION
-
             if (!manuallySelectDeathAnimation)
             {
                 characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
@@ -163,13 +161,9 @@ public class AIBossCharacterManager : AICharacterManager
             WorldSaveGameManager.instance.SaveGame();
         }
 
-        //  PLAY SOME DEATH SFX
 
         yield return new WaitForSeconds(5);
 
-        //  AWARD PLAYERS WITH RUNES
-
-        //  DISABLE CHARACTER
     }
 
     public void WakeBoss()

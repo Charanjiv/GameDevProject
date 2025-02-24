@@ -134,8 +134,6 @@ public class CharacterManager : NetworkBehaviour
                 //  RESET ANY FLAGS HERE THAT NEED TO BE RESET
                 //  NOTHING YET
 
-                //  IF WE ARE NOT GROUNDED, PLAY AN AERIAL DEATH ANIMATION
-
                 if (!manuallySelectDeathAnimation)
                 {
                     characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
@@ -143,13 +141,9 @@ public class CharacterManager : NetworkBehaviour
             }
         }
 
-        //  PLAY SOME DEATH SFX
 
         yield return new WaitForSeconds(5);
 
-        //  AWARD PLAYERS WITH RUNES
-
-        //  DISABLE CHARACTER
     }
 
     public virtual void ReviveCharacter()
@@ -182,18 +176,13 @@ public class CharacterManager : NetworkBehaviour
         }
     }
 
-    //public void KillCount()
-    //{
-    //    killCount += 1;
-    //    Debug.Log("1 Enemy Killed");
-    //}
+
     public void AddToKillCount()
     {
 
         killCount += (1.0f / 4f);
 
 
-        //Debug.Log("Kill count: " + killCount);
     }
 }
 
